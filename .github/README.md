@@ -1,14 +1,12 @@
 # atmos-pro-example-advanced
 
-An advanced example demonstrating how to use Atmos Pro with GitHub Actions for infrastructure deployment. This
-repository shows a comprehensive setup with multiple components and dependencies, showcasing how Atmos Pro handles
-complex infrastructure workflows.
+An advanced reference repository showing how to use Atmos Pro with GitHub Actions to deploy infrastructure.
 
 ## Introduction
 
-This is an advanced example repository that demonstrates how to use Atmos Pro with GitHub Actions for infrastructure
-deployment. It provides a comprehensive setup with multiple components and dependencies to showcase how Atmos Pro
-handles complex infrastructure workflows.
+This example goes beyond the basics to demonstrate a full-featured setup, including multiple components, dependencies,
+and coordinated workflows. It’s designed to help you understand how Atmos Pro streamlines complex infrastructure
+management in real-world scenarios.
 
 For comprehensive documentation and advanced features, visit [atmos-pro.com/docs](https://atmos-pro.com/docs).
 
