@@ -143,6 +143,8 @@ When a pull request is created or updated, Atmos Pro triggers
 
 This gives you visibility into what changes will be made to your infrastructure before merging.
 
+</details>
+
 ```mermaid
 sequenceDiagram
     participant Dev as Developer
@@ -169,8 +171,6 @@ sequenceDiagram
     AP->>GH: Update PR comment
 ```
 
-</details>
-
 <details>
 <summary><strong>On Merged Pull Requests</strong></summary>
 
@@ -185,6 +185,8 @@ When a pull request is merged, Atmos Pro triggers
 5. **Atmos Pro updates status comment** - Deployment results are posted as a comment on the merged PR
 
 This ensures your infrastructure changes are automatically deployed when code is merged.
+
+</details>
 
 ```mermaid
 sequenceDiagram
@@ -211,8 +213,6 @@ sequenceDiagram
     AP->>GH: Check workflow status
     AP->>GH: Update PR comment
 ```
-
-</details>
 
 For more detailed configuration options and advanced features, refer to the
 [Atmos Pro documentation](https://atmos-pro.com/docs).
