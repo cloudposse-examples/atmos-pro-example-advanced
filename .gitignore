@@ -69,3 +69,4 @@ Dockerfile.custom
 *.ovpn
 
 *.zip
+.atmos/cache.yaml

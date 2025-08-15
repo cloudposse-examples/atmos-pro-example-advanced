@@ -18,7 +18,7 @@ components:
   terraform:
     load-balancer:
       vars:
-        name: lb5
+        name: lb6
 
     cluster:
       vars:

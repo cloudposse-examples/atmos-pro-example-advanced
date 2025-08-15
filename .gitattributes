@@ -1,4 +1,0 @@
-# Note, this can be removed later. Currently keeps PR's easier to review
-docs linguist-documentation=true
-components/**/*.md linguist-documentation=true
-components/**/*.tf linguist-generated=true

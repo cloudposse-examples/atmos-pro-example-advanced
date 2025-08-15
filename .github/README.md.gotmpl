@@ -1,0 +1,97 @@
+# {{(ds "config").name}}
+
+{{ if has (ds "config") "description" }}
+{{ (ds "config").description }}
+{{- end }}
+
+{{ if has (ds "config") "introduction" }}
+## Introduction
+
+{{ (ds "config").introduction }}
+{{ end }}
+
+{{ if has (ds "config") "usage" }}
+## Usage
+
+{{ (ds "config").usage }}
+{{ end }}
+
+{{ if has (ds "config") "examples" }}
+## Examples
+
+{{ (ds "config").examples }}
+{{ end }}
+
+{{ if has (ds "config") "include" }}
+{{ range $file := (datasource "config").include -}}
+{{ (include "includes" $file) }}
+{{- end }}
+{{- end }}
+
+{{ if has (ds "config") "terraform_docs" }}
+{{ (ds "config").terraform_docs }}
+{{ end }}
+
+{{ if has (ds "config") "related" }}
+## Related Projects
+
+Check out these related projects.
+{{ range $related := (ds "config").related }}
+{{ printf "- [%s](%s) - %s" $related.name $related.url $related.description }}{{ end }}
+
+{{- end}}
+{{ if has (ds "config") "references" }}
+
+## References
+
+For additional context, refer to some of these links.
+{{ range $reference := (ds "config").references }}
+{{ printf "- [%s](%s) - %s" $reference.name $reference.url $reference.description }}{{ end }}
+
+{{ end}}
+
+{{- if eq (ds "config").license "APACHE2" }}
+## License
+
+<a href="https://opensource.org/licenses/Apache-2.0"><img src="https://img.shields.io/badge/License-Apache%202.0-blue.svg?style=for-the-badge" alt="License"></a>
+
+<details>
+<summary>Preamble to the Apache License, Version 2.0</summary>
+<br/>
+<br/>
+
+{{ if (file.Exists "LICENSE") -}}
+Complete license is available in the [`LICENSE`](LICENSE) file.
+{{- end }}
+
+```text
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+  https://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+```
+</details>
+{{- end }}
+
+{{ if has (ds "config") "copyrights" }}
+## Copyrights
+
+{{ range $copyright := (ds "config").copyrights -}}
+{{ printf "Copyright © %s-%d [%s](%s)\n" $copyright.year time.Now.Year $copyright.name $copyright.url }}
+{{- end }}
+{{ else }}
+---
+Copyright © 2017-{{ time.Now.Year }} [Cloud Posse, LLC](https://cpco.io/copyright)
+{{ end }} 
