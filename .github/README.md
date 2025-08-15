@@ -6,7 +6,26 @@ An advanced reference repository showing how to use Atmos Pro with GitHub Action
 
 This example goes beyond the basics to demonstrate a full-featured setup, including multiple components, dependencies,
 and coordinated workflows. It’s designed to help you understand how Atmos Pro streamlines complex infrastructure
-management in real-world scenarios.
+management in real-world scenarios. This example component dependency mapping is as follows:
+
+```mermaid
+---
+title: Ordered Dependencies of Components
+---
+
+graph LR;
+    cache --> vpc
+    database --> vpc
+    load-balancer --> vpc
+    cluster --> vpc
+    cluster --> load-balancer
+    cdn --> object-storage
+    cdn --> frontend
+    api --> database
+    api --> cluster
+    frontend --> cache
+    frontend --> api
+```
 
 For comprehensive documentation and advanced features, visit [atmos-pro.com/docs](https://atmos-pro.com/docs).
 
