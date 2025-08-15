@@ -6,7 +6,26 @@ An advanced reference repository showing how to use Atmos Pro with GitHub Action
 
 This example goes beyond the basics to demonstrate a full-featured setup, including multiple components, dependencies,
 and coordinated workflows. It’s designed to help you understand how Atmos Pro streamlines complex infrastructure
-management in real-world scenarios.
+management in real-world scenarios. This example component dependency mapping is as follows:
+
+```mermaid
+---
+title: Ordered Dependencies of Components
+---
+
+graph LR;
+    cache --> vpc
+    database --> vpc
+    load-balancer --> vpc
+    cluster --> vpc
+    cluster --> load-balancer
+    cdn --> object-storage
+    cdn --> frontend
+    api --> database
+    api --> cluster
+    frontend --> cache
+    frontend --> api
+```
 
 For comprehensive documentation and advanced features, visit [atmos-pro.com/docs](https://atmos-pro.com/docs).
 
@@ -124,6 +143,8 @@ When a pull request is created or updated, Atmos Pro triggers
 
 This gives you visibility into what changes will be made to your infrastructure before merging.
 
+</details>
+
 ```mermaid
 sequenceDiagram
     participant Dev as Developer
@@ -150,8 +171,6 @@ sequenceDiagram
     AP->>GH: Update PR comment
 ```
 
-</details>
-
 <details>
 <summary><strong>On Merged Pull Requests</strong></summary>
 
@@ -166,6 +185,8 @@ When a pull request is merged, Atmos Pro triggers
 5. **Atmos Pro updates status comment** - Deployment results are posted as a comment on the merged PR
 
 This ensures your infrastructure changes are automatically deployed when code is merged.
+
+</details>
 
 ```mermaid
 sequenceDiagram
@@ -192,8 +213,6 @@ sequenceDiagram
     AP->>GH: Check workflow status
     AP->>GH: Update PR comment
 ```
-
-</details>
 
 For more detailed configuration options and advanced features, refer to the
 [Atmos Pro documentation](https://atmos-pro.com/docs).
