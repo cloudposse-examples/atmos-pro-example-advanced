@@ -43,6 +43,9 @@ jobs:
           token: ${{ github.token }}
           install-wrapper: false
 
+      - name: Install OpenTofu # required for rendering Atmos templates
+        uses: opentofu/setup-opentofu@v1
+
       - name: List instances and upload to Atmos Pro
         env:
           ATMOS_PRO_WORKSPACE_ID: ${{ vars.ATMOS_PRO_WORKSPACE_ID }}
