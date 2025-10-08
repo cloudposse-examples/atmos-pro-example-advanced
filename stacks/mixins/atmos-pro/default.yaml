@@ -9,7 +9,7 @@ drift-detection-wf-config: &drift-detection-wf-config
     inputs:
       component: "{{ .atmos_component }}"
       stack: "{{ .atmos_stack }}"
-      #upload: "true" # Upload plan status to Atmos Pro for drift detection.
+      upload: "true" # Upload plan status to Atmos Pro for drift detection.
 
 apply-wf-config: &apply-wf-config
   atmos-terraform-apply.yaml:
