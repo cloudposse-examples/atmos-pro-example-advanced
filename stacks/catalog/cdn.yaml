@@ -8,5 +8,5 @@ components:
           2:
             component: frontend
       vars:
-        storage_id: '{{ (atmos.Component "object-storage" .stack).outputs.storage_id }}'
-        frontend_id: '{{ (atmos.Component "frontend" .stack).outputs.frontend_id }}'
+        storage_id: !terraform.state object-storage storage_id
+        frontend_id: !terraform.state frontend frontend_id

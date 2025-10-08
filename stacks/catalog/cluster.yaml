@@ -8,5 +8,5 @@ components:
           2:
             component: load-balancer
       vars:
-        vpc_id: '{{ (atmos.Component "vpc" .stack).outputs.vpc_id }}'
-        lb_id: '{{ (atmos.Component "load-balancer" .stack).outputs.lb_id }}'
+        vpc_id: !terraform.state vpc vpc_id
+        lb_id: !terraform.state load-balancer lb_id
