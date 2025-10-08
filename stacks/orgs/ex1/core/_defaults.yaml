@@ -4,4 +4,6 @@ import:
 vars:
   tenant: core
 
-
+settings:
+  pro:
+    enabled: false

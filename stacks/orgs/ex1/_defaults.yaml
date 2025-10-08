@@ -36,11 +36,3 @@ terraform:
   remote_state_backend:
     s3:
       role_arn: null
-
-  settings:
-    github:
-      actions_enabled: true
-    # pro:
-    #   drift_detection:
-    #     enabled: true
-
