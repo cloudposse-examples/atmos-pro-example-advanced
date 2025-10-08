@@ -18,6 +18,11 @@ on:
         description: "Stack"
         required: true
         type: string
+      upload:
+        description: "Upload plan status to Atmos Pro"
+        type: boolean
+        required: false
+        default: false
 
 # Avoid running the same stack in parallel mode (from different workflows)
 # This applied to across workflows to both plan and apply
@@ -53,4 +58,4 @@ jobs:
           atmos-version: ${{ vars.ATMOS_VERSION }}
           atmos-config-path: ${{ vars.ATMOS_CONFIG_PATH }}
           # Upload result to Atmos Pro. Required for Drift Detection.
-          atmos-pro-upload-status: true
+          atmos-pro-upload-status: ${{ inputs.upload }}

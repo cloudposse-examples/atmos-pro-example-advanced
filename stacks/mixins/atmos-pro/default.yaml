@@ -17,7 +17,9 @@ settings:
     drift_detection:
       enabled: false # disabled by default and enabled for the plat org under _defaults.yaml
       detect:
-        workflows: *plan-wf-config
+        workflows: 
+          <<: *plan-wf-config
+          upload: true # Only upload plan status to Atmos Pro for drift detection.
       remediate:
         workflows: *apply-wf-config
     pull_request:
