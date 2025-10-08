@@ -31,10 +31,13 @@ jobs:
         with:
           fetch-depth: 0
 
+      # Temporary until atmos list is update to support templates and functions
+      # TODO revert to:
+      # echo "ATMOS_CLI_CONFIG_PATH=$(realpath ${{ vars.ATMOS_CONFIG_PATH }})" >> $GITHUB_ENV
       - name: Set atmos cli config path vars
         shell: bash
         run: |-
-          echo "ATMOS_CLI_CONFIG_PATH=$(realpath ${{ vars.ATMOS_CONFIG_PATH }})" >> $GITHUB_ENV
+          echo "ATMOS_CLI_CONFIG_PATH=$(realpath atmos-disabled-templates.yaml)" >> $GITHUB_ENV
 
       - name: Install Atmos
         uses: cloudposse/github-action-setup-atmos@v2
@@ -49,6 +52,4 @@ jobs:
         run: |
           atmos list instances \
             --upload \
-            --process-templates=false \
-            --process-functions=false \
             --logs-level Debug

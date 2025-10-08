@@ -1,0 +1,83 @@
+# CLI config is loaded from the following locations (from lowest to highest priority):
+# system dir (`/usr/local/etc/atmos` on Linux, `%LOCALAPPDATA%/atmos` on Windows)
+# home dir (~/.atmos)
+# current directory
+# ENV vars
+# Command-line arguments
+#
+# It supports POSIX-style Globs for file names/paths (double-star `**` is supported)
+# https://en.wikipedia.org/wiki/Glob_(programming)
+
+# Base path for components, stacks and workflows configurations.
+# Can also be set using `ATMOS_BASE_PATH` ENV var, or `--base-path` command-line argument.
+# Supports both absolute and relative paths.
+# If not provided or is an empty string, `components.terraform.base_path`, `components.helmfile.base_path`, `stacks.base_path` and `workflows.base_path`
+# are independent settings (supporting both absolute and relative paths).
+# If `base_path` is provided, `components.terraform.base_path`, `components.helmfile.base_path`, `stacks.base_path` and `workflows.base_path`
+# are considered paths relative to `base_path`.
+base_path: ""
+
+aliases:
+  tofu: terraform
+
+components:
+  terraform:
+    command: "tofu" # Use the `tofu` command when calling "terraform" in Atmos.
+    base_path: "components/terraform"
+    apply_auto_approve: false
+    deploy_run_init: true
+    init_run_reconfigure: true
+    auto_generate_backend_file: true
+
+stacks:
+  base_path: "stacks"
+  included_paths:
+    - "orgs/**/*"
+  excluded_paths:
+    - "**/_defaults.yaml"
+  name_pattern: "{tenant}-{environment}-{stage}"
+
+workflows:
+  base_path: "stacks/workflows"
+
+docs:
+  generate:
+    readme:
+      base-dir: .
+      template: ".github/README.md.gotmpl"
+      output: ".github/README.md"
+      terraform:
+        enabled: false
+      input:
+        - "README.yaml"
+
+integrations:
+  github:
+    gitops:
+      opentofu-version: 1.10.1
+      artifact-storage:
+        region: "us-east-1"
+        bucket: "atmos-pro-ex2-tfplan"
+        table: "atmos-pro-ex2-tfplan"
+        role: "arn:aws:iam::630114703016:role/atmos-pro-ex2-github-actions"
+      role:
+        plan: "arn:aws:iam::630114703016:role/atmos-pro-ex2-github-actions"
+        apply: "arn:aws:iam::630114703016:role/atmos-pro-ex2-github-actions"
+
+# Templates are required to determine Atmos Pro apply environment dynamically
+templates:
+  settings:
+    enabled: false
+
+commands:
+  - name: cloudformation
+    description: "Deploy CloudFormation stacks"
+    arguments:
+      - name: stack
+        description: "Name of the CloudFormation stack"
+        shorthand: "s"
+        required: false
+        default: "atmos-pro-ex2"
+    steps:
+      - "curl -o /tmp/terraform-backend.yaml https://cplive-core-ue2-public-cloudformation.s3.amazonaws.com/aws-cloudformation-terraform-backend.yaml"
+      - "aws cloudformation deploy --stack-name {{ .Arguments.stack }} --template-file /tmp/terraform-backend.yaml --capabilities CAPABILITY_NAMED_IAM --no-fail-on-empty-changeset --parameter-overrides GitHubOrg=cloudposse-examples CreateOIDCProvider=false"
