@@ -22,4 +22,4 @@ components:
 
     cluster:
       vars:
-        name: cluster4
+        name: cluster5
