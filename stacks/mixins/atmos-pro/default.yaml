@@ -5,6 +5,13 @@ plan-wf-config: &plan-wf-config
       stack: "{{ .atmos_stack }}"
       upload: "false" # Only upload plan status to Atmos Pro for drift detection.
 
+drift-detection-wf-config: &drift-detection-wf-config
+  atmos-terraform-plan.yaml:
+    inputs:
+      component: "{{ .atmos_component }}"
+      stack: "{{ .atmos_stack }}"
+      upload: "true" # Upload plan status to Atmos Pro for drift detection.
+
 apply-wf-config: &apply-wf-config
   atmos-terraform-apply.yaml:
     inputs:
@@ -18,10 +25,7 @@ settings:
     drift_detection:
       enabled: false # disabled by default and enabled for the plat org under _defaults.yaml
       detect:
-        workflows: 
-          <<: *plan-wf-config
-          inputs:
-            upload: "true" # Override the default value for this specific trigger.
+        workflows: *drift-detection-wf-config
       remediate:
         workflows: *apply-wf-config
     pull_request:
