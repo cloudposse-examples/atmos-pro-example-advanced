@@ -64,11 +64,14 @@ integrations:
         plan: "arn:aws:iam::630114703016:role/atmos-pro-ex2-github-actions"
         apply: "arn:aws:iam::630114703016:role/atmos-pro-ex2-github-actions"
 
-# templates:
-#   settings:
-#     enabled: true
-#     gomplate:
-#       enabled: true # required to determine Atmos Pro apply environment dynamically
+# Templates are required to determine Atmos Pro apply environment dynamically
+templates:
+  settings:
+    enabled: true
+    gomplate:
+      enabled: true 
+    sprig:
+      enabled: true
 
 commands:
   - name: cloudformation
