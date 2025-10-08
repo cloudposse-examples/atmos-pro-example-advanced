@@ -111,8 +111,8 @@ Follow these steps to get started with this Atmos Pro example:
 
    - `ATMOS_PRO_WORKSPACE_ID` - Your Atmos Pro workspace ID.
      [Find your workspace ID](https://atmos-pro.com/docs/configure/workspaces).
-   - `ATMOS_VERSION` - The version of Atmos to use (e.g., `1.181.0`,
-     [see releases](https://github.com/cloudposse/atmos/releases))
+   - `ATMOS_VERSION` - The version of Atmos to use. Minimum version is `1.192.0`.
+     ([see releases for the latest](https://github.com/cloudposse/atmos/releases))
    - `ATMOS_CONFIG_PATH` - Path to your Atmos configuration file (e.g., `atmos.yaml`)
 
    For more information about GitHub variables, see the

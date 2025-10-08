@@ -9,7 +9,7 @@ description: |-
 
 introduction: |-
   This example goes beyond the basics to demonstrate a full-featured setup, including multiple components, dependencies, and coordinated workflows.
-  It’s designed to help you understand how Atmos Pro streamlines complex infrastructure management in real-world scenarios. 
+  It’s designed to help you understand how Atmos Pro streamlines complex infrastructure management in real-world scenarios.
   This example component dependency mapping is as follows:
 
   ```mermaid
@@ -98,7 +98,7 @@ usage: |-
 
   4. **Set up GitHub Variables**
      - `ATMOS_PRO_WORKSPACE_ID` - Your Atmos Pro workspace ID. [Find your workspace ID](https://atmos-pro.com/docs/configure/workspaces).
-     - `ATMOS_VERSION` - The version of Atmos to use (e.g., `1.181.0`, [see releases](https://github.com/cloudposse/atmos/releases))
+     - `ATMOS_VERSION` - The version of Atmos to use. Minimum version is `1.192.0`. ([see releases for the latest](https://github.com/cloudposse/atmos/releases))
      - `ATMOS_CONFIG_PATH` - Path to your Atmos configuration file (e.g., `atmos.yaml`)
 
      For more information about GitHub variables, see the [GitHub documentation](https://docs.github.com/en/actions/how-tos/writing-workflows/choosing-what-your-workflow-does/store-information-in-variables).
