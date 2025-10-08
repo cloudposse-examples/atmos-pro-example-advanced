@@ -3,7 +3,7 @@ plan-wf-config: &plan-wf-config
     inputs:
       component: "{{ .atmos_component }}"
       stack: "{{ .atmos_stack }}"
-      upload: false # Only upload plan status to Atmos Pro for drift detection.
+      upload: "false" # Only upload plan status to Atmos Pro for drift detection.
 
 apply-wf-config: &apply-wf-config
   atmos-terraform-apply.yaml:
@@ -20,7 +20,7 @@ settings:
       detect:
         workflows: 
           <<: *plan-wf-config
-          upload: true # Override the default value for this specific trigger.
+          upload: "true" # Override the default value for this specific trigger.
       remediate:
         workflows: *apply-wf-config
     pull_request:
