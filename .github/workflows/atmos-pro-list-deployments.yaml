@@ -49,6 +49,6 @@ jobs:
         run: |
           atmos list instances \
             --upload \
-            --process-template=false \
+            --process-templates=false \
             --process-functions=false \
             --logs-level Debug
