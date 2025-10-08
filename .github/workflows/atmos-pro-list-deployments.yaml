@@ -47,4 +47,6 @@ jobs:
         env:
           ATMOS_PRO_WORKSPACE_ID: ${{ vars.ATMOS_PRO_WORKSPACE_ID }}
         run: |
-          atmos list instances --upload
+          atmos list instances \
+            --upload \
+            --logs-level Debug
