@@ -31,13 +31,10 @@ jobs:
         with:
           fetch-depth: 0
 
-      # Temporary until atmos list is update to support templates and functions
-      # TODO revert to:
-      # echo "ATMOS_CLI_CONFIG_PATH=$(realpath ${{ vars.ATMOS_CONFIG_PATH }})" >> $GITHUB_ENV
       - name: Set atmos cli config path vars
         shell: bash
         run: |-
-          echo "ATMOS_CLI_CONFIG_PATH=$(realpath atmos-disabled-templates.yaml)" >> $GITHUB_ENV
+          echo "ATMOS_CLI_CONFIG_PATH=$(realpath ${{ vars.ATMOS_CONFIG_PATH }})" >> $GITHUB_ENV
 
       - name: Install Atmos
         uses: cloudposse/github-action-setup-atmos@v2
@@ -45,6 +42,32 @@ jobs:
           atmos-version: ${{ vars.ATMOS_VERSION }}
           token: ${{ github.token }}
           install-wrapper: false
+
+      # We need to assume AWS credentials to read the Terraform state 
+      # Get the AWS region and the Terraform role to assume from the Atmos stack settings
+      - name: Get Atmos Stack Values
+        id: atmos-settings
+        uses: cloudposse/github-action-atmos-get-setting@v2
+        with:
+          process-templates: 'false'
+          process-functions: 'false'
+          settings: |
+            - component: ${{ matrix.component }}
+              stack: ${{ matrix.stack }}
+              settingsPath: settings.integrations.github.region
+              outputPath: aws-region
+            - component: ${{ matrix.component }}
+              stack: ${{ matrix.stack }}
+              settingsPath: settings.integrations.github.gitops.role.plan
+              outputPath: terraform-role
+
+      - name: Assume AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4.0.2
+        with:
+          aws-region: ${{ fromJson(steps.atmos-settings.outputs.settings).aws-region }}
+          role-to-assume: ${{ fromJson(steps.atmos-settings.outputs.settings).terraform-role }}
+          role-session-name: "atmos-list-deployments-${{ github.run_id }}"
+          mask-aws-account-id: "no"
 
       - name: List instances and upload to Atmos Pro
         env:
