@@ -57,5 +57,3 @@ jobs:
           # Atmos required configuration
           atmos-version: ${{ vars.ATMOS_VERSION }}
           atmos-config-path: ${{ vars.ATMOS_CONFIG_PATH }}
-          # Custom configuration
-          debug: false
