@@ -68,6 +68,10 @@ integrations:
 templates:
   settings:
     enabled: false
+    gomplate:
+      enabled: false
+    sprig:
+      enabled: false
 
 commands:
   - name: cloudformation
