@@ -20,7 +20,8 @@ settings:
       detect:
         workflows: 
           <<: *plan-wf-config
-          upload: "true" # Override the default value for this specific trigger.
+          inputs:
+            upload: "true" # Override the default value for this specific trigger.
       remediate:
         workflows: *apply-wf-config
     pull_request:

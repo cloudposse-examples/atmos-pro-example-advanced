@@ -34,7 +34,10 @@ jobs:
       - "ubuntu-latest"
 
     # Trigger Atmos Pro for Pull Request plan events and specifically closed PRs that have been merged (not just closed)
-    if: github.event.action != 'closed' || (github.event.action == 'closed' && github.event.pull_request.merged == true)
+    # Skip if the PR has the "no-apply" label
+    if: |
+      !contains(github.event.pull_request.labels.*.name, 'no-apply') &&
+      (github.event.action != 'closed' || (github.event.action == 'closed' && github.event.pull_request.merged == true))
 
     steps:
       - name: Checkout
