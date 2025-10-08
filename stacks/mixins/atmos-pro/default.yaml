@@ -22,7 +22,7 @@ settings:
   pro:
     enabled: true
     drift_detection:
-      enabled: false 
+      enabled: true
       detect:
         workflows: *drift-detection-wf-config
       remediate:
