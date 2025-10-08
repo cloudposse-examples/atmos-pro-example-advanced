@@ -40,3 +40,7 @@ terraform:
   settings:
     github:
       actions_enabled: true
+    pro:
+      drift_detection:
+        enabled: true
+

@@ -14,6 +14,12 @@ apply-wf-config: &apply-wf-config
 settings:
   pro:
     enabled: true
+    drift_detection:
+      enabled: false # disabled by default and enabled for the plat org under _defaults.yaml
+      detect:
+        workflows: *plan-wf-config
+      remediate:
+        workflows: *apply-wf-config
     pull_request:
       opened:
         workflows: *plan-wf-config
@@ -23,7 +29,6 @@ settings:
         workflows: *plan-wf-config
       merged:
         workflows: *apply-wf-config
-
     release:
       released:
         workflows: *apply-wf-config
