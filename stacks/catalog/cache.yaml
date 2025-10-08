@@ -6,4 +6,4 @@ components:
           1:
             component: vpc
       vars:
-        vpc_id: '{{ (atmos.Component "vpc" .stack).outputs.vpc_id }}'
+        vpc_id: !terraform.state vpc vpc_id

@@ -43,6 +43,15 @@ jobs:
           token: ${{ github.token }}
           install-wrapper: false
 
+      # We need to assume AWS credentials to read the Terraform state 
+      - name: Assume AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4.0.2
+        with:
+          aws-region: "us-east-1"
+          role-to-assume: "arn:aws:iam::630114703016:role/atmos-pro-ex2-github-actions"
+          role-session-name: "atmos-list-deployments-${{ github.run_id }}"
+          mask-aws-account-id: "no"
+
       - name: List instances and upload to Atmos Pro
         env:
           ATMOS_PRO_WORKSPACE_ID: ${{ vars.ATMOS_PRO_WORKSPACE_ID }}

@@ -8,5 +8,5 @@ components:
           2:
             component: cluster
       vars:
-        database_id: '{{ (atmos.Component "database" .stack).outputs.database_id }}'
-        cluster_id: '{{ (atmos.Component "cluster" .stack).outputs.cluster_id }}'
+        database_id: !terraform.state database database_id
+        cluster_id: !terraform.state cluster cluster_id

@@ -8,5 +8,5 @@ components:
           2:
             component: cache
       vars:
-        api_id: '{{ (atmos.Component "api" .stack).outputs.api_id }}'
-        cache_id: '{{ (atmos.Component "cache" .stack).outputs.cache_id }}'
+        api_id: !terraform.state api api_id
+        cache_id: !terraform.state cache cache_id
