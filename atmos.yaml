@@ -73,6 +73,11 @@ templates:
     sprig:
       enabled: true
 
+# Disable telemetry for our internal usage
+settings:
+  telemetry:
+    enabled: false
+
 commands:
   - name: cloudformation
     description: "Deploy CloudFormation stacks"
