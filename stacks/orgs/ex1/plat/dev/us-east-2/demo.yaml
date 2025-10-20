@@ -29,12 +29,13 @@ components:
     my/instance:
       metadata:
         component: cluster
-      pro:
-        pull_request:
-          workflows:
-            synchronize:
-              atmos-terraform-plan.yaml:
-                inputs:
-                  upload: "true"
+      settings:
+        pro:
+          pull_request:
+            workflows:
+              synchronize:
+                atmos-terraform-plan.yaml:
+                  inputs:
+                    upload: "true"
       vars:
         name: test-instance-1
