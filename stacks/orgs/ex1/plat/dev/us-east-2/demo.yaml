@@ -32,8 +32,8 @@ components:
       settings:
         pro:
           pull_request:
-            workflows:
-              synchronize:
+            synchronize:
+              workflows:
                 atmos-terraform-plan.yaml:
                   inputs:
                     upload: "true"
