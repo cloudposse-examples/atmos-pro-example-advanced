@@ -31,9 +31,10 @@ components:
         component: cluster
       pro:
         pull_request:
-          synchronize:
-            atmos-terraform-plan.yaml:
-              inputs:
-                upload: "true"
+          workflows:
+            synchronize:
+              atmos-terraform-plan.yaml:
+                inputs:
+                  upload: "true"
       vars:
         name: test-instance-1
