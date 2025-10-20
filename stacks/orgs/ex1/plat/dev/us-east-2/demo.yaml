@@ -23,3 +23,9 @@ components:
     cluster:
       vars:
         name: cluster7
+
+    my/instance:
+      metadata:
+        component: cluster
+      vars:
+        name: test-instance-1
