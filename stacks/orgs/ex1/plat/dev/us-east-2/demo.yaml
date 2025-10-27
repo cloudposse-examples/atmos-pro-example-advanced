@@ -16,10 +16,9 @@ import:
 
 components:
   terraform:
-    # No change - test
     load-balancer:
       vars:
-        name: lb4
+        name: lb5
 
     cluster:
       vars:
