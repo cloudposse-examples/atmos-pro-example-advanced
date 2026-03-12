@@ -70,3 +70,4 @@ Dockerfile.custom
 
 *.zip
 .atmos/cache.yaml
+.tools
