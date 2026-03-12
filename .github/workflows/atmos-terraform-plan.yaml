@@ -35,9 +35,6 @@ permissions:
   contents: read # This is required for actions/checkout
   checks: write # This is required for Atmos set gha statuses
 
-env:
-  ATMOS_CONFIG_PATH: ${{ vars.ATMOS_CONFIG_PATH }}
-
 jobs:
   atmos-plan:
     name: ${{ inputs.component }}-${{ inputs.stack }}
