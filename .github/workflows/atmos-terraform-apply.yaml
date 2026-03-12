@@ -35,7 +35,7 @@ permissions:
   checks: write # This is required for Atmos set gha statuses
   statuses: write # This is required to post status checks back to the PR commit
 
-jobs: 
+jobs:
   atmos-apply:
     name: ${{ inputs.component }}-${{ inputs.stack }}
 
@@ -49,13 +49,32 @@ jobs:
     steps:
       - uses: unfor19/install-aws-cli-action@v1
 
-      - name: Apply Atmos Component
-        uses: cloudposse/github-action-atmos-terraform-apply@v4
+      - name: Install Atmos
+        uses: cloudposse/github-action-setup-atmos@v3
         with:
-          # Atmos Pro args
-          component: ${{ inputs.component }}
-          stack: ${{ inputs.stack }}
-          sha: ${{ inputs.sha }}
-          # Atmos required configuration
+          install-wrapper: false
           atmos-version: ${{ vars.ATMOS_VERSION }}
-          atmos-config-path: ${{ vars.ATMOS_CONFIG_PATH }}
+
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ inputs.sha }}
+
+      - name: Install Toolchain
+        shell: bash
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          atmos toolchain install
+          atmos toolchain env --format github
+
+      - name:  Apply Atmos Component
+        shell: bash
+        env:
+          # Workspace ID is required for uploading the plan status to Atmos Pro.
+          ATMOS_PRO_WORKSPACE_ID: ${{ vars.ATMOS_PRO_WORKSPACE_ID }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ATMOS_PROFILE: github
+          GITHUB_SHA: ${{ inputs.sha }}
+        run: |
+          atmos terraform deploy ${{ inputs.component }} -s ${{ inputs.stack }} --upload-status
