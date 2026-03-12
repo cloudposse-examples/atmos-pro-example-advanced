@@ -40,16 +40,6 @@ variable "descriptor_formats" {
   description = "Descriptor formats"
 }
 
-variable "label_order" {
-  type        = list(string)
-  default     = null
-  description = <<-EOT
-    The order in which the labels (ID elements) appear in the `id`.
-    Defaults to ["namespace", "environment", "stage", "name", "attributes"].
-    You can omit any of the 6 labels ("tenant" is the 6th), but at least one must be present.
-    EOT
-}
-
 resource "random_id" "id" {
   byte_length = 8
 }
