@@ -7,13 +7,6 @@ terraform:
       # Use a specific terraform version from toolchain
       opentofu: "1.11.0"
   vars:
-    label_order:
-      - namespace
-      - tenant
-      - environment
-      - stage
-      - name
-      - attributes
     descriptor_formats:
       account_name:
         format: "%v-%v"
