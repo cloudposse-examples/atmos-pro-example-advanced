@@ -52,17 +52,9 @@ jobs:
           atmos-version: ${{ vars.ATMOS_VERSION }}
 
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           ref: ${{ inputs.sha }}
-
-      - name: Install Toolchain
-        shell: bash
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          atmos toolchain install
-          atmos toolchain env --format github
 
       - name:  Plan Atmos Component
         shell: bash
@@ -73,19 +65,3 @@ jobs:
           ATMOS_PROFILE: github
         run: |
           atmos terraform plan ${{ inputs.component }} -s ${{ inputs.stack }} --upload-status
-
-      # - name: Plan Atmos Component
-      #   uses: cloudposse/github-action-atmos-terraform-plan@v5
-      #   env:
-      #     # Workspace ID is required for uploading the plan status to Atmos Pro.
-      #     ATMOS_PRO_WORKSPACE_ID: ${{ vars.ATMOS_PRO_WORKSPACE_ID }}
-      #   with:
-      #     # Atmos Pro args
-      #     component: ${{ inputs.component }}
-      #     stack: ${{ inputs.stack }}
-      #     sha: ${{ inputs.sha }}
-      #     # Atmos required configuration
-      #     atmos-version: ${{ vars.ATMOS_VERSION }}
-      #     atmos-config-path: ${{ vars.ATMOS_CONFIG_PATH }}
-      #     # Upload result to Atmos Pro. Required for Drift Detection.
-      #     atmos-pro-upload-status: ${{ fromJSON(inputs.upload) }} # Convert string to boolean
