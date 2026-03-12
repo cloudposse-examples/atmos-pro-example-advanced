@@ -51,6 +51,9 @@ docs:
       input:
         - "README.yaml"
 
+ci:
+  enabled: true
+
 integrations:
   github:
     gitops:
@@ -69,7 +72,7 @@ templates:
   settings:
     enabled: true
     gomplate:
-      enabled: true 
+      enabled: true
     sprig:
       enabled: true
 
