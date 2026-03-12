@@ -33,6 +33,10 @@ concurrency:
 permissions:
   id-token: write # This is required for requesting the JWT (OIDC) token
   contents: read # This is required for actions/checkout
+  checks: write # This is required for Atmos set gha statuses
+
+env:
+  ATMOS_CONFIG_PATH: ${{ vars.ATMOS_CONFIG_PATH }}
 
 jobs:
   atmos-plan:
@@ -44,18 +48,35 @@ jobs:
     steps:
       - uses: unfor19/install-aws-cli-action@v1
 
-      - name: Plan Atmos Component
-        uses: cloudposse/github-action-atmos-terraform-plan@v5
+      - name: Install Atmos
+        uses: cloudposse/github-action-setup-atmos@v2
+        with:
+          atmos-version: ${{ vars.ATMOS_VERSION }}
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name:  Plan Atmos Component
+        shell: bash
         env:
           # Workspace ID is required for uploading the plan status to Atmos Pro.
           ATMOS_PRO_WORKSPACE_ID: ${{ vars.ATMOS_PRO_WORKSPACE_ID }}
-        with:
-          # Atmos Pro args
-          component: ${{ inputs.component }}
-          stack: ${{ inputs.stack }}
-          sha: ${{ inputs.sha }}
-          # Atmos required configuration
-          atmos-version: ${{ vars.ATMOS_VERSION }}
-          atmos-config-path: ${{ vars.ATMOS_CONFIG_PATH }}
-          # Upload result to Atmos Pro. Required for Drift Detection.
-          atmos-pro-upload-status: ${{ fromJSON(inputs.upload) }} # Convert string to boolean
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          atmos terraform plan ${{ inputs.component }} -s ${{ inputs.stack }} --upload-status
+          
+      # - name: Plan Atmos Component
+      #   uses: cloudposse/github-action-atmos-terraform-plan@v5
+      #   env:
+      #     # Workspace ID is required for uploading the plan status to Atmos Pro.
+      #     ATMOS_PRO_WORKSPACE_ID: ${{ vars.ATMOS_PRO_WORKSPACE_ID }}
+      #   with:
+      #     # Atmos Pro args
+      #     component: ${{ inputs.component }}
+      #     stack: ${{ inputs.stack }}
+      #     sha: ${{ inputs.sha }}
+      #     # Atmos required configuration
+      #     atmos-version: ${{ vars.ATMOS_VERSION }}
+      #     atmos-config-path: ${{ vars.ATMOS_CONFIG_PATH }}
+      #     # Upload result to Atmos Pro. Required for Drift Detection.
+      #     atmos-pro-upload-status: ${{ fromJSON(inputs.upload) }} # Convert string to boolean
