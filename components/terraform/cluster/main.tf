@@ -35,7 +35,7 @@ variable "region" {
 }
 
 variable "descriptor_formats" {
-  type        = map(string)
+  type        = any
   default     = {}
   description = "Descriptor formats"
 }
