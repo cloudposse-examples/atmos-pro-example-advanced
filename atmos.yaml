@@ -51,8 +51,47 @@ docs:
       input:
         - "README.yaml"
 
+# CI-specific settings (provider-agnostic naming)
 ci:
+  # Gate for CI auto-detection (bool, default false).
+  # When false/unset: CI features only activate with --ci flag (or CI env var).
+  # When true: CI features available via auto-detection even without --ci flag.
+  # Note: --ci flag bypasses this setting. See ci-detection.md for full precedence table.
   enabled: true
+
+  # Output variables for downstream jobs
+  # GitHub: $GITHUB_OUTPUT, GitLab: dotenv artifacts
+  output:
+    enabled: true
+    # Whitelist of native CI variables to export. When omitted, ALL native CI variables are exported.
+    # NOTE: This whitelist only applies to native CI variables (has_changes, stack, etc.).
+    # Terraform outputs (output_*) after successful apply are ALWAYS included regardless of this list.
+    # variables:
+    #   - has_changes
+    #   - has_errors
+    #   - exit_code
+    #   - success
+    #   - resources_to_create
+    #   - resources_to_change
+    #   - resources_to_replace
+    #   - resources_to_destroy
+    #   - stack
+    #   - component
+    #   - command
+    #   - summary
+
+  # Job summary with plan/apply results
+  # GitHub: $GITHUB_STEP_SUMMARY, GitLab: job artifacts
+  summary:
+    enabled: true
+    # template: "custom-summary.md"
+
+  # Commit status checks
+  # GitHub: Check Runs API, GitLab: Commit Status API
+  checks:
+    enabled: true  # Disabled by default (requires additional permissions)
+    context_prefix: "atmos"
+
 
 integrations:
   github:
@@ -93,3 +132,11 @@ commands:
     steps:
       - "curl -o /tmp/terraform-backend.yaml https://cplive-core-ue2-public-cloudformation.s3.amazonaws.com/aws-cloudformation-terraform-backend.yaml"
       - "aws cloudformation deploy --stack-name {{ .Arguments.stack }} --template-file /tmp/terraform-backend.yaml --capabilities CAPABILITY_NAMED_IAM --no-fail-on-empty-changeset --parameter-overrides GitHubOrg=cloudposse-examples CreateOIDCProvider=false"
+
+logs:
+  verbose: false
+  colors: true
+  file: "/dev/stderr"
+  # Supported log levels: Trace, Debug, Info, Warning, Off
+  # Can also be set using `ATMOS_LOGS_LEVEL` ENV var, or `--log-level` command-line argument
+  level: Debug
