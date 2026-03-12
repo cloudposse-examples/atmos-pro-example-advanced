@@ -28,6 +28,18 @@ variable "stage" {
   description = "ID element. Usually used to indicate role, e.g. 'prod', 'staging', 'source', 'build', 'test', 'deploy', 'release'"
 }
 
+variable "region" {
+  description = "Region"
+  type        = string
+  default     = "us-east-1"
+}
+
+variable "descriptor_formats" {
+  type        = map(string)
+  default     = {}
+  description = "Descriptor formats"
+}
+
 variable "api_id" {
   description = "Mock input for api id"
   type        = string
