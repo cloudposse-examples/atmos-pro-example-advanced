@@ -21,7 +21,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       # TODO replace this placeholder action with the true API call
       # to get this value from the atmos pro app

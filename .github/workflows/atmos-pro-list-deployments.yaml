@@ -18,7 +18,7 @@ permissions:
   checks: write # This is required for Atmos set gha statuses
   statuses: write # This is required to post status checks back to the PR commit
 
-jobs: 
+jobs:
   atmos-list-instances:
     name: list instances
 
@@ -29,7 +29,7 @@ jobs:
       - uses: unfor19/install-aws-cli-action@v1
 
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
@@ -39,13 +39,13 @@ jobs:
           echo "ATMOS_CLI_CONFIG_PATH=$(realpath ${{ vars.ATMOS_CONFIG_PATH }})" >> $GITHUB_ENV
 
       - name: Install Atmos
-        uses: cloudposse/github-action-setup-atmos@v2
+        uses: cloudposse/github-action-setup-atmos@v3
         with:
           atmos-version: ${{ vars.ATMOS_VERSION }}
           token: ${{ github.token }}
           install-wrapper: false
 
-      # We need to assume AWS credentials to read the Terraform state 
+      # We need to assume AWS credentials to read the Terraform state
       - name: Assume AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4.0.2
         with:
