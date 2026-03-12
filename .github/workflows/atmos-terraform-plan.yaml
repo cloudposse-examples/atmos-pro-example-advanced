@@ -70,6 +70,7 @@ jobs:
           # Workspace ID is required for uploading the plan status to Atmos Pro.
           ATMOS_PRO_WORKSPACE_ID: ${{ vars.ATMOS_PRO_WORKSPACE_ID }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ATMOS_PROFILE: github
         run: |
           atmos terraform plan ${{ inputs.component }} -s ${{ inputs.stack }} --upload-status
 

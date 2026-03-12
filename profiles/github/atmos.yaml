@@ -1,0 +1,16 @@
+auth:
+  providers:
+    github-oidc:
+      kind: github/oidc
+      region: us-east-2
+      spec:
+        audience: sts.amazonaws.com
+
+  identities:
+    ex2/atmos:
+      default: true
+      kind: aws/assume-role
+      via:
+        provider: github-oidc
+      principal:
+        assume_role: arn:aws:iam::630114703016:role/atmos-pro-ex2-github-actions
