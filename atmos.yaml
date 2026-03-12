@@ -91,7 +91,7 @@ ci:
   checks:
     enabled: true  # Disabled by default (requires additional permissions)
     context_prefix: "atmos"
-  
+
 
 integrations:
   github:

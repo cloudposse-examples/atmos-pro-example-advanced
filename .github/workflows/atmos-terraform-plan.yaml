@@ -72,5 +72,6 @@ jobs:
           ATMOS_PRO_WORKSPACE_ID: ${{ vars.ATMOS_PRO_WORKSPACE_ID }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ATMOS_PROFILE: github
+          GITHUB_SHA: ${{ inputs.sha }}
         run: |
           atmos terraform plan ${{ inputs.component }} -s ${{ inputs.stack }} --upload-status
