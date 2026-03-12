@@ -35,11 +35,33 @@ variable "region" {
 }
 
 variable "descriptor_formats" {
-  type        = map(string)
+  type        = any
   default     = {}
-  description = "Descriptor formats"
+  description = <<-EOT
+    Describe additional descriptors to be output in the `descriptors` output map.
+    Map of maps. Keys are names of descriptors. Values are maps of the form
+    `{
+       format = string
+       labels = list(string)
+    }`
+    (Type is `any` so the map values can later be enhanced to provide additional options.)
+    `format` is a Terraform format string to be passed to the `format()` function.
+    `labels` is a list of labels, in order, to pass to `format()` function.
+    Label values will be normalized before being passed to `format()` so they will be
+    identical to how they appear in `id`.
+    Default is `{}` (`descriptors` output will be empty).
+    EOT
 }
 
+variable "label_order" {
+  type        = list(string)
+  default     = null
+  description = <<-EOT
+    The order in which the labels (ID elements) appear in the `id`.
+    Defaults to ["namespace", "environment", "stage", "name", "attributes"].
+    You can omit any of the 6 labels ("tenant" is the 6th), but at least one must be present.
+    EOT
+}
 
 variable "database_id" {
   description = "Mock database ID"
