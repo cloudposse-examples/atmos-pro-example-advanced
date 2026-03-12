@@ -6,4 +6,4 @@ components:
           1:
             component: vpc
       vars:
-        vpc_id: !terraform.state vpc vpc_id
+        vpc_id: !terraform.state vpc ".vpc_id // ""mock-vpc-id"""
