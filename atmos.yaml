@@ -93,3 +93,11 @@ commands:
     steps:
       - "curl -o /tmp/terraform-backend.yaml https://cplive-core-ue2-public-cloudformation.s3.amazonaws.com/aws-cloudformation-terraform-backend.yaml"
       - "aws cloudformation deploy --stack-name {{ .Arguments.stack }} --template-file /tmp/terraform-backend.yaml --capabilities CAPABILITY_NAMED_IAM --no-fail-on-empty-changeset --parameter-overrides GitHubOrg=cloudposse-examples CreateOIDCProvider=false"
+
+logs:
+  verbose: false
+  colors: true
+  file: "/dev/stderr"
+  # Supported log levels: Trace, Debug, Info, Warning, Off
+  # Can also be set using `ATMOS_LOGS_LEVEL` ENV var, or `--log-level` command-line argument
+  level: Debug
