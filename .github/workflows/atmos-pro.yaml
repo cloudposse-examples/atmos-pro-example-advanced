@@ -78,5 +78,6 @@ jobs:
           # Compare the head of the PR to the base of the PR if the PR is not merged.
           # If the PR is merged, compare the head of the PR to 1 previous commit on the base branch.
           skip-atmos-functions: true
+          process-functions: false
           head-ref: ${{ github.event.pull_request.head.sha }}
           base-ref: ${{ github.event.action == 'closed' && steps.get_parent.outputs.parent_commit || github.event.pull_request.base.sha }}
