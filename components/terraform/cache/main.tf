@@ -35,10 +35,11 @@ variable "region" {
 }
 
 variable "descriptor_formats" {
-  type        = map(string)
+  type        = any
   default     = {}
   description = "Descriptor formats"
 }
+
 resource "random_id" "id" {
   byte_length = 8
 }
