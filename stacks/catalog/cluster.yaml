@@ -8,5 +8,5 @@ components:
           2:
             component: load-balancer
       vars:
-        vpc_id: !terraform.state vpc vpc_id
-        lb_id: !terraform.state load-balancer lb_id
+        vpc_id: !terraform.state vpc ".vpc_id // ""mock-vpc-id"""
+        lb_id: !terraform.state load-balancer ".lb_id // ""mock-lb-id"""

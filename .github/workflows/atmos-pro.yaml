@@ -25,6 +25,7 @@ concurrency:
 permissions:
   id-token: write # This is required for requesting the JWT (OIDC) token
   contents: read # This is required for actions/checkout
+  checks: write # This is required for Atmos set gha statuses
 
 jobs:
   affected:
@@ -77,5 +78,6 @@ jobs:
           atmos-pro-upload: true
           # Compare the head of the PR to the base of the PR if the PR is not merged.
           # If the PR is merged, compare the head of the PR to 1 previous commit on the base branch.
+          skip-atmos-functions: true
           head-ref: ${{ github.event.pull_request.head.sha }}
           base-ref: ${{ github.event.action == 'closed' && steps.get_parent.outputs.parent_commit || github.event.pull_request.base.sha }}
