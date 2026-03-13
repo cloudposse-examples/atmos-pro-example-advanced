@@ -13,6 +13,7 @@ import:
   - catalog/object-storage
   - catalog/frontend
   - catalog/cdn
+  - catalog/monitoring
 
 components:
   terraform:
