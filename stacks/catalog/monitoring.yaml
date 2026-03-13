@@ -1,0 +1,18 @@
+components:
+  terraform:
+    monitoring:
+      settings:
+        depends_on:
+          1:
+            component: api
+          2:
+            component: database
+          3:
+            component: cluster
+          4:
+            component: frontend
+      vars:
+        api_id: !terraform.state api ".api_id // ""mock-api-id"""
+        database_id: !terraform.state database ".database_id // ""mock-database-id"""
+        cluster_id: !terraform.state cluster ".cluster_id // ""mock-cluster-id"""
+        frontend_id: !terraform.state frontend ".frontend_id // ""mock-frontend-id"""
