@@ -18,8 +18,24 @@ components:
   terraform:
     load-balancer:
       vars:
-        name: lb4
+        name: lb5
 
     cluster:
       vars:
-        name: cluster6
+        name: cluster7
+
+    # This is used to test Atmos Pro with a slash in the name.
+    # Delete me after validation.
+    my/instance:
+      metadata:
+        component: cluster
+      settings:
+        pro:
+          pull_request:
+            synchronize:
+              workflows:
+                atmos-terraform-plan.yaml:
+                  inputs:
+                    upload: "true"
+      vars:
+        name: test-instance-1
