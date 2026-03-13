@@ -92,7 +92,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ATMOS_PROFILE: github
         run: |
-          atmos describe affected --process-functions false --process-templates false --identity ex2/atmos --include-settings=false --upload --skip=terraform.output --repo-path "$GITHUB_WORKSPACE/base-ref"
+          atmos describe affected --process-functions=false --process-templates=false --identity ex2/atmos --include-settings=false --upload --skip=terraform.output --repo-path "$GITHUB_WORKSPACE/base-ref"
 
       # - name: Determine Affected Stacks
       #   id: affected
