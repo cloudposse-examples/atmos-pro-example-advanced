@@ -39,4 +39,4 @@ components:
                   inputs:
                     upload: "true"
       vars:
-        name: test-instance-2
+        name: test-instance-3
