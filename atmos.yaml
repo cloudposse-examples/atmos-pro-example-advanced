@@ -90,7 +90,7 @@ ci:
   # GitHub: Check Runs API, GitLab: Commit Status API
   checks:
     enabled: true  # Disabled by default (requires additional permissions)
-    context_prefix: "atmos"
+    context_prefix: ""
 
 
 integrations:
