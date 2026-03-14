@@ -77,13 +77,13 @@ jobs:
           install-wrapper: false
           atmos-version: ${{ vars.ATMOS_VERSION }}
 
-      - name: Install Toolchain
-        shell: bash
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          atmos toolchain install
-          atmos toolchain env --format github
+      # - name: Install Toolchain
+      #   shell: bash
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #   run: |
+      #     atmos toolchain install
+      #     atmos toolchain env --format github
 
       - name:  Plan Atmos Component
         shell: bash
