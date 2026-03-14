@@ -65,11 +65,11 @@ jobs:
           echo "merge_commit=$MERGE_COMMIT" >> "$GITHUB_OUTPUT"
           echo "parent_commit=$PARENT" >> "$GITHUB_OUTPUT"
 
-      - uses: actions/checkout@v6
-        with:
-          ref: ${{ github.event.action == 'closed' && steps.get_parent.outputs.parent_commit || github.event.pull_request.base.sha }}
-          path: base-ref
-          fetch-depth: 0
+      # - uses: actions/checkout@v6
+      #   with:
+      #     ref: ${{ github.event.action == 'closed' && steps.get_parent.outputs.parent_commit || github.event.pull_request.base.sha }}
+      #     path: base-ref
+      #     fetch-depth: 0
 
       - name: Install Atmos
         uses: cloudposse/github-action-setup-atmos@v3
@@ -93,7 +93,14 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ATMOS_PROFILE: github
         run: |
-          atmos describe affected --process-functions=false --identity ex2/atmos --include-settings=false --upload --skip=terraform.output --repo-path "$GITHUB_WORKSPACE/base-ref"
+          atmos describe affected \
+            --process-functions=false \ 
+            --identity ex2/atmos \
+            --include-settings=false \
+            --upload \
+            --skip=terraform.output \
+            --sha ${{ github.event.action == 'closed' && steps.get_parent.outputs.parent_commit || github.event.pull_request.base.sha }} 
+      # --repo-path "$GITHUB_WORKSPACE/base-ref"
 
       # - name: Determine Affected Stacks
       #   id: affected
