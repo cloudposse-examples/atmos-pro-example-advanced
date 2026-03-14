@@ -1,5 +1,5 @@
 name: 👽 Atmos Pro Determine Affected Stacks
-run-name: 👽 Atmos Pro Determine Affected Stacks
+run-name: 👽 Atmos Pro
 
 # Atmos Pro reacts to events defined in the Atmos stack settings
 # and will trigger the appropriate workflows for the given event.
