@@ -44,7 +44,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          sha: ${{ github.event.pull_request.head.sha }}
+          ref: ${{ github.event.pull_request.head.sha }}
           fetch-depth: 0 # Fetch all history for all branches and tags
 
       # For merged PRs, we want to use 1 previous commit from the base branch SHA
