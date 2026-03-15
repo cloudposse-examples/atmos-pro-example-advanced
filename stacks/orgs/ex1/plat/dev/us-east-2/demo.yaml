@@ -23,7 +23,7 @@ components:
 
     cluster:
       vars:
-        name: cluster7
+        name: cluster12
 
     # This is used to test Atmos Pro with a slash in the name.
     # Delete me after validation.
@@ -39,4 +39,4 @@ components:
                   inputs:
                     upload: "true"
       vars:
-        name: test-instance-2
+        name: test-instance-4
