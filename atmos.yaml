@@ -91,6 +91,10 @@ ci:
   checks:
     enabled: true  # Disabled by default (requires additional permissions)
     context_prefix: ""
+    add: true        # atmos/{command}/{stack}/{component}/add (only when count > 0)
+    change: true     # atmos/{command}/{stack}/{component}/change (only when count > 0)
+    destroy: true    # atmos/{command}/{stack}/{component}/destroy (only when count > 0)
+    
 
 
 integrations:
