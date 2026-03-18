@@ -44,8 +44,6 @@ jobs:
       - "ubuntu-latest"
 
     steps:
-      - uses: unfor19/install-aws-cli-action@v1
-
       - name: Install Atmos
         uses: cloudposse/github-action-setup-atmos@v3
         with:
@@ -56,14 +54,6 @@ jobs:
         uses: actions/checkout@v6
         with:
           ref: ${{ inputs.sha }}
-
-      - name: Install Toolchain
-        shell: bash
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          atmos toolchain install
-          atmos toolchain env --format github
 
       - name:  Plan Atmos Component
         shell: bash
