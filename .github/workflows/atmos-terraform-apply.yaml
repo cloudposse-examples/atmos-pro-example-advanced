@@ -60,14 +60,6 @@ jobs:
         with:
           ref: ${{ inputs.sha }}
 
-      - name: Install Toolchain
-        shell: bash
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          atmos toolchain install
-          atmos toolchain env --format github
-
       - name:  Apply Atmos Component
         shell: bash
         env:
