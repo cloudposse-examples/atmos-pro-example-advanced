@@ -21,7 +21,7 @@ jobs:
     runs-on: ["ubuntu-latest"]
     steps:
     - name: "Checkout source code at current commit"
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
       # Leave pinned at 0.7.1 until https://github.com/mszostok/codeowners-validator/issues/173 is resolved
     - uses: mszostok/codeowners-validator@v0.7.1
       if: github.event.pull_request.head.repo.full_name == github.repository
@@ -45,15 +45,15 @@ jobs:
     name: "static code analysis"
     runs-on: ["ubuntu-latest"]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: 16
 
       - name: Install Atmos
-        uses: cloudposse/github-action-setup-atmos@v2
+        uses: cloudposse/github-action-setup-atmos@v3
         with:
           atmos-version: 1.63.0
 
