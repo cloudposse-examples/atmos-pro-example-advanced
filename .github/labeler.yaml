@@ -1,18 +1,24 @@
 container:
-  - components/docker/**/Dockerfile
-  - rootfs/**
+  - changed-files:
+      - any-glob-to-any-file:
+          - components/docker/**/Dockerfile
+          - rootfs/**
 
 docs:
-  - docs/**
-  - README.md
+  - changed-files:
+      - any-glob-to-any-file:
+          - docs/**
+          - README.md
 
 automation:
-  - .github/**
-  - .spacelift/**
-  - Makefile
-  - .pre-commit-config.yaml
+  - changed-files:
+      - any-glob-to-any-file:
+          - .github/**
+          - .spacelift/**
+          - Makefile
+          - .pre-commit-config.yaml
 
 configuration:
-  - stacks/**
-
-
+  - changed-files:
+      - any-glob-to-any-file:
+          - stacks/**

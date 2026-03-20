@@ -1,6 +1,8 @@
 name: Labeler
 
 on:
+  # pull_request_target is required here because the labeler needs write access to PRs.
+  # No code is checked out, so this is safe.
   pull_request_target:
     types:
       - opened
