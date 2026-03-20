@@ -47,7 +47,7 @@ jobs:
 
       # We need to assume AWS credentials to read the Terraform state
       - name: Assume AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v4.0.2
+        uses: aws-actions/configure-aws-credentials@v6
         with:
           aws-region: "us-east-1"
           role-to-assume: "arn:aws:iam::630114703016:role/atmos-pro-ex2-github-actions"
