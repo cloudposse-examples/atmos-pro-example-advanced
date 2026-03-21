@@ -99,19 +99,6 @@ ci:
     
 
 
-integrations:
-  github:
-    gitops:
-      opentofu-version: 1.10.1
-      artifact-storage:
-        region: "us-east-1"
-        bucket: "atmos-pro-ex2-tfplan"
-        table: "atmos-pro-ex2-tfplan"
-        role: "arn:aws:iam::630114703016:role/atmos-pro-ex2-github-actions"
-      role:
-        plan: "arn:aws:iam::630114703016:role/atmos-pro-ex2-github-actions"
-        apply: "arn:aws:iam::630114703016:role/atmos-pro-ex2-github-actions"
-
 # Templates are required to determine Atmos Pro apply environment dynamically
 templates:
   settings:
