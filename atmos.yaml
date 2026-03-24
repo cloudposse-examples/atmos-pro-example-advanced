@@ -15,8 +15,6 @@
 # are independent settings (supporting both absolute and relative paths).
 # If `base_path` is provided, `components.terraform.base_path`, `components.helmfile.base_path`, `stacks.base_path` and `workflows.base_path`
 # are considered paths relative to `base_path`.
-base_path: ""
-
 aliases:
   tofu: terraform
 
@@ -35,7 +33,7 @@ stacks:
     - "orgs/**/*"
   excluded_paths:
     - "**/_defaults.yaml"
-  name_pattern: "{tenant}-{environment}-{stage}"
+  name_template: "{{.tenant}}-{{.environment}}-{{.stage}}"
 
 workflows:
   base_path: "stacks/workflows"
@@ -99,19 +97,6 @@ ci:
     
 
 
-integrations:
-  github:
-    gitops:
-      opentofu-version: 1.10.1
-      artifact-storage:
-        region: "us-east-1"
-        bucket: "atmos-pro-ex2-tfplan"
-        table: "atmos-pro-ex2-tfplan"
-        role: "arn:aws:iam::630114703016:role/atmos-pro-ex2-github-actions"
-      role:
-        plan: "arn:aws:iam::630114703016:role/atmos-pro-ex2-github-actions"
-        apply: "arn:aws:iam::630114703016:role/atmos-pro-ex2-github-actions"
-
 # Templates are required to determine Atmos Pro apply environment dynamically
 templates:
   settings:
@@ -125,19 +110,6 @@ templates:
 settings:
   telemetry:
     enabled: false
-
-commands:
-  - name: cloudformation
-    description: "Deploy CloudFormation stacks"
-    arguments:
-      - name: stack
-        description: "Name of the CloudFormation stack"
-        shorthand: "s"
-        required: false
-        default: "atmos-pro-ex2"
-    steps:
-      - "curl -o /tmp/terraform-backend.yaml https://cplive-core-ue2-public-cloudformation.s3.amazonaws.com/aws-cloudformation-terraform-backend.yaml"
-      - "aws cloudformation deploy --stack-name {{ .Arguments.stack }} --template-file /tmp/terraform-backend.yaml --capabilities CAPABILITY_NAMED_IAM --no-fail-on-empty-changeset --parameter-overrides GitHubOrg=cloudposse-examples CreateOIDCProvider=false"
 
 logs:
   verbose: false
