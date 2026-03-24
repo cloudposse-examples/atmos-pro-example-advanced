@@ -1,12 +1,10 @@
 components:
   terraform:
     api:
-      settings:
-        depends_on:
-          1:
-            component: database
-          2:
-            component: cluster
+      dependencies:
+        components:
+          - component: database
+          - component: cluster
       vars:
         database_id: !terraform.state database ".database_id // ""mock-database-id"""
         cluster_id: !terraform.state cluster ".cluster_id // ""mock-cluster-id"""
