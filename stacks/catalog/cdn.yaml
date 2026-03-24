@@ -1,12 +1,10 @@
 components:
   terraform:
     cdn:
-      settings:
-        depends_on:
-          1:
-            component: object-storage
-          2:
-            component: frontend
+      dependencies:
+        components:
+          - component: object-storage
+          - component: frontend
       vars:
         storage_id: !terraform.state object-storage ".storage_id // ""mock-storage-id"""
         frontend_id: !terraform.state frontend ".frontend_id // ""mock-frontend-id"""

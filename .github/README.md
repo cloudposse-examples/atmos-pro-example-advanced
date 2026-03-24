@@ -27,6 +27,7 @@ graph LR;
     api --> cluster
     frontend --> cache
     frontend --> api
+    monitoring --> cluster
 ```
 
 For comprehensive documentation and advanced features, visit [atmos-pro.com/docs](https://atmos-pro.com/docs).
