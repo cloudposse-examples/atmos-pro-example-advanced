@@ -47,8 +47,6 @@ jobs:
       - "ubuntu-latest"
 
     steps:
-      - uses: unfor19/install-aws-cli-action@v1
-
       - name: Install Atmos
         uses: cloudposse/github-action-setup-atmos@v3
         with:

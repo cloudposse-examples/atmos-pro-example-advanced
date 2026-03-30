@@ -214,8 +214,6 @@ usage: |-
   ├── .github/
   │   ├── README.md                            # Generated README for GitHub
   │   ├── README.md.gotmpl                     # Template for README generation
-  │   ├── actions/                             # GitHub Actions custom actions
-  │   │   └── retrieve-plan/                   # Action to retrieve Terraform plans
   │   ├── workflows/                           # GitHub Actions workflows
   │   │   ├── atmos-pro.yaml                   # Main Atmos Pro workflow
   │   │   ├── atmos-pro-list-deployments.yaml  # List deployments workflow
