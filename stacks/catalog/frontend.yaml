@@ -1,12 +1,10 @@
 components:
   terraform:
     frontend:
-      settings:
-        depends_on:
-          1:
-            component: api
-          2:
-            component: cache
+      dependencies:
+        components:
+          - component: api
+          - component: cache
       vars:
         api_id: !terraform.state api ".api_id // ""mock-api-id"""
         cache_id: !terraform.state cache ".cache_id // ""mock-cache-id"""

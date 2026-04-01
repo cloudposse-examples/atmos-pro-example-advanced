@@ -1,9 +1,8 @@
 components:
   terraform:
     load-balancer:
-      settings:
-        depends_on:
-          1:
-            component: vpc
+      dependencies:
+        components:
+          - component: vpc
       vars:
         vpc_id: !terraform.state vpc ".vpc_id // ""mock-vpc-id"""

@@ -26,8 +26,6 @@ jobs:
       - "ubuntu-latest"
 
     steps:
-      - uses: unfor19/install-aws-cli-action@v1
-
       - name: Checkout
         uses: actions/checkout@v6
         with:
