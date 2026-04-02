@@ -31,26 +31,12 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Set atmos cli config path vars
-        shell: bash
-        run: |-
-          echo "ATMOS_CLI_CONFIG_PATH=$(realpath ${{ vars.ATMOS_CONFIG_PATH }})" >> $GITHUB_ENV
-
       - name: Install Atmos
         uses: cloudposse/github-action-setup-atmos@v3
         with:
           atmos-version: ${{ vars.ATMOS_VERSION }}
           token: ${{ github.token }}
           install-wrapper: false
-
-      # We need to assume AWS credentials to read the Terraform state
-      - name: Assume AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v6
-        with:
-          aws-region: "us-east-1"
-          role-to-assume: "arn:aws:iam::630114703016:role/atmos-pro-ex2-github-actions"
-          role-session-name: "atmos-list-deployments-${{ github.run_id }}"
-          mask-aws-account-id: "no"
 
       - name: List instances and upload to Atmos Pro
         env:
