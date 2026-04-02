@@ -10,6 +10,7 @@ concurrency:
   cancel-in-progress: true
 
 permissions:
+  id-token: write # This is required for requesting the JWT (OIDC) token
   contents: read # required to get the previous release SHA
 
 jobs:
@@ -37,14 +38,23 @@ jobs:
           commit_sha=$(gh api repos/${{ github.repository }}/git/ref/tags/$latest_release_tag --jq '.object.sha')
           echo "commit_sha=$commit_sha" >> $GITHUB_OUTPUT
 
-      - name: Gather Affected Stacks
-        id: affected
-        uses: cloudposse/github-action-atmos-affected-stacks@v6
+      - name: Install Atmos
+        uses: cloudposse/github-action-setup-atmos@v3
+        with:
+          install-wrapper: false
+          atmos-version: ${{ vars.ATMOS_VERSION }}
+
+      - name: Determine Affected Stacks
+        shell: bash
         env:
           ATMOS_PRO_WORKSPACE_ID: ${{ vars.ATMOS_PRO_WORKSPACE_ID }}
-        with:
-          atmos-version: ${{ vars.ATMOS_VERSION }}
-          atmos-config-path: ${{ vars.ATMOS_CONFIG_PATH }}
-          atmos-pro-upload: true
-          base-ref: ${{ steps.get_latest_release_sha.outputs.commit_sha }}
-          head-ref: ${{ github.sha  }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ATMOS_PROFILE: github
+        run: |
+          atmos describe affected \
+            --process-functions=false \
+            --include-settings=false \
+            --skip=terraform.output \
+            --upload \
+            --identity=ex2/atmos \
+            --sha ${{ steps.get_latest_release_sha.outputs.commit_sha }}
