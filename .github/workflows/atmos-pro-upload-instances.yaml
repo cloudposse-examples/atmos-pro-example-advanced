@@ -1,7 +1,10 @@
-name: 👽 Atmos Pro List instances
-run-name: list instances
+name: 👽 Atmos Pro Upload Instances
+run-name: Upload Instances
 
 on:
+  push:
+    branches:
+      - main
   schedule:
     - cron: '0 0 * * *'
   workflow_dispatch:
@@ -20,7 +23,7 @@ permissions:
 
 jobs:
   atmos-list-instances:
-    name: list instances
+    name: Upload Instances
 
     runs-on:
       - "ubuntu-latest"
