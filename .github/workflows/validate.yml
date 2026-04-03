@@ -55,7 +55,7 @@ jobs:
       - name: Install Atmos
         uses: cloudposse/github-action-setup-atmos@v3
         with:
-          atmos-version: 1.63.0
+          atmos-version: 1.214.0
 
       # Validate Atmos
       - name: Atmos Validate

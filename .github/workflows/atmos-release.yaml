@@ -24,20 +24,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v6
 
-      # TODO replace this placeholder action with the true API call
-      # to get this value from the atmos pro app
-      - name: Get latest release commit SHA
-        id: get_latest_release_sha
-        shell: bash
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          echo "Getting last 2 releases. This release and the previous..."
-          latest_release_tag=$(gh release list --limit 2 --json tagName --jq '.[1].tagName')
-          echo "Getting the SHA of the previous release..."
-          commit_sha=$(gh api repos/${{ github.repository }}/git/ref/tags/$latest_release_tag --jq '.object.sha')
-          echo "commit_sha=$commit_sha" >> $GITHUB_OUTPUT
-
       - name: Install Atmos
         uses: cloudposse/github-action-setup-atmos@v3
         with:
@@ -56,5 +42,4 @@ jobs:
             --include-settings=false \
             --skip=terraform.output \
             --upload \
-            --identity=ex2/atmos \
-            --sha ${{ steps.get_latest_release_sha.outputs.commit_sha }}
+            --identity=ex2/atmos
