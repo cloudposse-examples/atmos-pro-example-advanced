@@ -28,22 +28,24 @@ jobs:
     runs-on:
       - "ubuntu-latest"
 
+    container:
+      image: ghcr.io/cloudposse/atmos:${{ vars.ATMOS_VERSION }}
+
+    defaults:
+      run:
+        shell: bash
+
     steps:
       - name: Checkout
         uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
-      - name: Install Atmos
-        uses: cloudposse/github-action-setup-atmos@v3
-        with:
-          atmos-version: ${{ vars.ATMOS_VERSION }}
-          token: ${{ github.token }}
-          install-wrapper: false
-
       - name: List instances and upload to Atmos Pro
         env:
           ATMOS_PRO_WORKSPACE_ID: ${{ vars.ATMOS_PRO_WORKSPACE_ID }}
+          ATMOS_PROFILE: github
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           atmos list instances \
             --upload \
