@@ -81,9 +81,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ATMOS_PROFILE: github
         run: |
-          atmos describe affected \
-            --process-functions=false \
-            --include-settings=false \
-            --skip=terraform.output \
-            --upload \
-            --sha ${{ github.event.action == 'closed' && steps.get_parent.outputs.parent_commit || github.event.pull_request.base.sha }}
+          atmos describe affected --upload
