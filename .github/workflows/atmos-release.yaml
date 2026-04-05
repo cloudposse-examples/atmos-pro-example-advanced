@@ -20,6 +20,13 @@ jobs:
     runs-on:
       - "ubuntu-latest"
 
+    container:
+      image: ghcr.io/cloudposse/atmos:${{ vars.ATMOS_VERSION }}
+
+    defaults:
+      run:
+        shell: bash
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
@@ -28,7 +35,6 @@ jobs:
       # to get this value from the atmos pro app
       - name: Get latest release commit SHA
         id: get_latest_release_sha
-        shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
@@ -38,14 +44,7 @@ jobs:
           commit_sha=$(gh api repos/${{ github.repository }}/git/ref/tags/$latest_release_tag --jq '.object.sha')
           echo "commit_sha=$commit_sha" >> $GITHUB_OUTPUT
 
-      - name: Install Atmos
-        uses: cloudposse/github-action-setup-atmos@v3
-        with:
-          install-wrapper: false
-          atmos-version: ${{ vars.ATMOS_VERSION }}
-
       - name: Determine Affected Stacks
-        shell: bash
         env:
           ATMOS_PRO_WORKSPACE_ID: ${{ vars.ATMOS_PRO_WORKSPACE_ID }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -56,5 +55,4 @@ jobs:
             --include-settings=false \
             --skip=terraform.output \
             --upload \
-            --identity=ex2/atmos \
             --sha ${{ steps.get_latest_release_sha.outputs.commit_sha }}
