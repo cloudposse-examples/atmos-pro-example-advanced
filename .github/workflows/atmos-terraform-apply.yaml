@@ -67,5 +67,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ATMOS_PROFILE: github
           GITHUB_SHA: ${{ inputs.sha }}
+          COMPONENT: ${{ inputs.component }}
+          STACK: ${{ inputs.stack }}
         run: |
-          atmos terraform deploy ${{ inputs.component }} -s ${{ inputs.stack }} --upload-status
+          atmos terraform deploy "${COMPONENT}" -s "${STACK}" --upload-status
