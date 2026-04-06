@@ -34,6 +34,13 @@ jobs:
     runs-on:
       - "ubuntu-latest"
 
+    container:
+      image: ghcr.io/cloudposse/atmos:${{ vars.ATMOS_VERSION }}
+
+    defaults:
+      run:
+        shell: bash
+
     # Trigger Atmos Pro for Pull Request plan events and specifically closed PRs that have been merged (not just closed)
     # Skip if the PR has the "no-apply" label
     if: |
@@ -47,23 +54,14 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha }}
           fetch-depth: 0 # Fetch all history for all branches and tags
 
-      - name: Install Atmos
-        uses: cloudposse/github-action-setup-atmos@v3
-        with:
-          install-wrapper: false
-          atmos-version: ${{ vars.ATMOS_VERSION }}
+      - name: Configure git safe directory
+        run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
 
-      - name:  Determine Affected Stacks
-        shell: bash
+      - name: Determine Affected Stacks
         env:
           # Workspace ID is required for uploading the plan status to Atmos Pro.
           ATMOS_PRO_WORKSPACE_ID: ${{ vars.ATMOS_PRO_WORKSPACE_ID }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ATMOS_PROFILE: github
         run: |
-          atmos describe affected \
-            --process-functions=false \
-            --include-settings=false \
-            --skip=terraform.output \
-            --upload \
-            --identity=ex2/atmos
+          atmos describe affected --upload

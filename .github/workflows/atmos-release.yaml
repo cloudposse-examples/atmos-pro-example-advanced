@@ -20,26 +20,21 @@ jobs:
     runs-on:
       - "ubuntu-latest"
 
+    container:
+      image: ghcr.io/cloudposse/atmos:${{ vars.ATMOS_VERSION }}
+
+    defaults:
+      run:
+        shell: bash
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
 
-      - name: Install Atmos
-        uses: cloudposse/github-action-setup-atmos@v3
-        with:
-          install-wrapper: false
-          atmos-version: ${{ vars.ATMOS_VERSION }}
-
       - name: Determine Affected Stacks
-        shell: bash
         env:
           ATMOS_PRO_WORKSPACE_ID: ${{ vars.ATMOS_PRO_WORKSPACE_ID }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ATMOS_PROFILE: github
         run: |
-          atmos describe affected \
-            --process-functions=false \
-            --include-settings=false \
-            --skip=terraform.output \
-            --upload \
-            --identity=ex2/atmos
+          atmos describe affected --upload
