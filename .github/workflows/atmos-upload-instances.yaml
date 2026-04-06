@@ -48,5 +48,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           atmos list instances \
-            --upload \
-            --logs-level Debug
+            --upload
