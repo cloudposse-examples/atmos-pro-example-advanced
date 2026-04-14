@@ -14,3 +14,9 @@ import:
   - catalog/frontend
   - catalog/cdn
   - catalog/monitoring
+
+components:
+  terraform:
+    cluster:
+      vars:
+        name: cluster1
