@@ -44,18 +44,16 @@ jobs:
   sca:
     name: "static code analysis"
     runs-on: ["ubuntu-latest"]
+
+    container:
+      image: ghcr.io/cloudposse/atmos:${{ vars.ATMOS_VERSION }}
+
+    defaults:
+      run:
+        shell: bash
+
     steps:
       - uses: actions/checkout@v6
-
-      - name: Setup Node
-        uses: actions/setup-node@v6
-        with:
-          node-version: 16
-
-      - name: Install Atmos
-        uses: cloudposse/github-action-setup-atmos@v3
-        with:
-          atmos-version: 1.63.0
 
       # Validate Atmos
       - name: Atmos Validate

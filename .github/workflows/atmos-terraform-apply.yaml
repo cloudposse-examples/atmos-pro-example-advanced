@@ -46,19 +46,20 @@ jobs:
     runs-on:
       - "ubuntu-latest"
 
-    steps:
-      - name: Install Atmos
-        uses: cloudposse/github-action-setup-atmos@v3
-        with:
-          install-wrapper: false
-          atmos-version: ${{ vars.ATMOS_VERSION }}
+    container:
+      image: ghcr.io/cloudposse/atmos:${{ vars.ATMOS_VERSION }}
 
+    defaults:
+      run:
+        shell: bash
+
+    steps:
       - name: Checkout
         uses: actions/checkout@v6
         with:
           ref: ${{ inputs.sha }}
 
-      - name:  Apply Atmos Component
+      - name: Apply Atmos Component
         shell: bash
         env:
           # Workspace ID is required for uploading the plan status to Atmos Pro.
@@ -66,5 +67,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ATMOS_PROFILE: github
           GITHUB_SHA: ${{ inputs.sha }}
+          COMPONENT: ${{ inputs.component }}
+          STACK: ${{ inputs.stack }}
         run: |
-          atmos terraform deploy ${{ inputs.component }} -s ${{ inputs.stack }} --upload-status
+          atmos terraform deploy "${COMPONENT}" -s "${STACK}" --upload-status
