@@ -1,0 +1,51 @@
+name: 👽 Atmos Pro Upload Instances
+run-name: Upload Instances
+
+on:
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+
+# Avoid running the same stack in parallel mode (from different workflows)
+# This applied to across workflows to both plan and apply
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: false
+
+permissions:
+  id-token: write # This is required for requesting the JWT
+  contents: read  # This is required for actions/checkout
+  checks: write # This is required for Atmos set gha statuses
+  statuses: write # This is required to post status checks back to the PR commit
+
+jobs:
+  atmos-list-instances:
+    name: Upload Instances
+
+    runs-on:
+      - "ubuntu-latest"
+
+    container:
+      image: ghcr.io/cloudposse/atmos:${{ vars.ATMOS_VERSION }}
+
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: List instances and upload to Atmos Pro
+        env:
+          ATMOS_PRO_WORKSPACE_ID: ${{ vars.ATMOS_PRO_WORKSPACE_ID }}
+          ATMOS_PROFILE: github
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          atmos list instances \
+            --upload

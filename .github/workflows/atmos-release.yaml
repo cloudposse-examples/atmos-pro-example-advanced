@@ -10,6 +10,7 @@ concurrency:
   cancel-in-progress: true
 
 permissions:
+  id-token: write # This is required for requesting the JWT (OIDC) token
   contents: read # required to get the previous release SHA
 
 jobs:
@@ -19,32 +20,21 @@ jobs:
     runs-on:
       - "ubuntu-latest"
 
+    container:
+      image: ghcr.io/cloudposse/atmos:${{ vars.ATMOS_VERSION }}
+
+    defaults:
+      run:
+        shell: bash
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
 
-      # TODO replace this placeholder action with the true API call
-      # to get this value from the atmos pro app
-      - name: Get latest release commit SHA
-        id: get_latest_release_sha
-        shell: bash
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          echo "Getting last 2 releases. This release and the previous..."
-          latest_release_tag=$(gh release list --limit 2 --json tagName --jq '.[1].tagName')
-          echo "Getting the SHA of the previous release..."
-          commit_sha=$(gh api repos/${{ github.repository }}/git/ref/tags/$latest_release_tag --jq '.object.sha')
-          echo "commit_sha=$commit_sha" >> $GITHUB_OUTPUT
-
-      - name: Gather Affected Stacks
-        id: affected
-        uses: cloudposse/github-action-atmos-affected-stacks@v6
+      - name: Determine Affected Stacks
         env:
           ATMOS_PRO_WORKSPACE_ID: ${{ vars.ATMOS_PRO_WORKSPACE_ID }}
-        with:
-          atmos-version: ${{ vars.ATMOS_VERSION }}
-          atmos-config-path: ${{ vars.ATMOS_CONFIG_PATH }}
-          atmos-pro-upload: true
-          base-ref: ${{ steps.get_latest_release_sha.outputs.commit_sha }}
-          head-ref: ${{ github.sha  }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ATMOS_PROFILE: github
+        run: |
+          atmos describe affected --upload

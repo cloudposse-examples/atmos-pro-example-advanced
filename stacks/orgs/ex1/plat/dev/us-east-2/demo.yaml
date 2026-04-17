@@ -23,7 +23,7 @@ components:
 
     cluster:
       vars:
-        name: cluster23
+        name: cluster25
 
     # This is used to test Atmos Pro with a slash in the name.
     # Delete me after validation.
