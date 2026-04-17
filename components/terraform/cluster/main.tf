@@ -62,6 +62,12 @@ variable "lb_id" {
   default     = ""
 }
 
+variable "cluster_version" {
+  description = "Version of the cluster"
+  type        = string
+  default     = "1.0.0"
+}
+
 resource "random_id" "id" {
   byte_length = 8
   keepers = {
@@ -90,4 +96,8 @@ output "vpc_id" {
 
 output "lb_id" {
   value = var.lb_id
+}
+
+output "cluster_version" {
+  value = var.cluster_version
 }
