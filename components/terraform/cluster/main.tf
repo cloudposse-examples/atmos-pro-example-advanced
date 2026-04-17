@@ -62,7 +62,7 @@ variable "lb_id" {
   default     = ""
 }
 
-variable "version" {
+variable "cluster_version" {
   description = "Version of the cluster"
   type        = string
   default     = "1.0.0"
@@ -98,6 +98,6 @@ output "lb_id" {
   value = var.lb_id
 }
 
-output "version" {
-  value = var.version
+output "cluster_version" {
+  value = var.cluster_version
 }
