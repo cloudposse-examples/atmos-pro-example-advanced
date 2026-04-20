@@ -1,22 +1,26 @@
 ---
 name: atmos-demo-bump
-description: Use when demoing Atmos Pro / Terraform plan changes on this repo's mock components — either (a) bumping a `<component>_version` in a stack to produce a visible plan diff, or (b) wiring up a new or existing mock component with the version-bump demo pattern (random_id keepers + null_resource triggers). Triggered by requests like "bump the cluster version", "set up the <x> component so I can demo a change", "why does the plan show no infrastructure changes", or "add triggers to component X".
+description: Use when demoing Atmos Pro / Terraform plan changes on this repo's mock components — bumping a `<component>_version` or `name` in a stack to produce a visible plan diff, wiring up a mock component with the version-bump pattern (random_id keepers + null_resource triggers), or replaying a demo via an empty commit. Triggered by requests like "bump the cluster version", "bump the <x> name", plain "bump it", "set up the <x> component so I can demo a change", "why does the plan show no infrastructure changes", or "add triggers to component X".
 ---
 
 # Atmos Demo Bump
 
 This repo is an Atmos Pro example. The Terraform components under `components/terraform/` (except `dynamodb`, which is a real AWS module) are **mocks** — they only manage `random_id` resources. To make a plan *show a real infrastructure change* during a demo, each component exposes a `<component>_version` input variable, and that variable is wired to `random_id.keepers` and a `null_resource.triggers`. Bumping the version in a stack forces recreates, which surfaces as real plan lines (not just output-only diffs).
 
-## Two things this skill covers
+## What this skill covers
 
-1. **Bumping an existing demo** — produce a visible plan change in a specific stack.
-2. **Wiring a component** — add the demo pattern to a new or existing mock component.
+1. **Bumping a version** — produce a visible plan change in a specific stack.
+2. **Bumping a name** — increment the numeric suffix on `name` (e.g. `cluster25` → `cluster26`) to force a new `random_id` and all downstream recreates.
+3. **Just "bump it"** — push another empty commit to replay CI/Atmos Pro on the current state.
+4. **Wiring a component** — add the demo pattern to a new or existing mock component.
 
 ---
 
-## 1. Bumping an existing demo
+## 1. Bumping a version
 
 **Goal:** user asks something like "bump the cluster version in dev" or "demo a change on frontend in staging." You need to produce a Terraform plan that shows real replacements, not just `output values will change`.
+
+**Default bump size:** *minor* (e.g. `1.1.0` → `1.2.0`). Only do a major (`1.x.x` → `2.0.0`) or patch (`1.1.0` → `1.1.1`) bump if the user explicitly asks for it.
 
 ### Steps
 
@@ -38,7 +42,44 @@ This repo is an Atmos Pro example. The Terraform components under `components/te
 
 ---
 
-## 2. Wiring a component with the demo pattern
+## 2. Bumping a name
+
+**Goal:** user says "bump the cluster name" or "bump the vpc name in prod." Increment the trailing integer on the component's `name` var by one. Because `name` is a keeper on `random_id.id`, this also rotates the random suffix — so the plan shows a real replace, same as a version bump.
+
+### Steps
+
+1. Find the stack file (same locations as section 1).
+2. Find the component's `name` value — it will look like `cluster25`, `lb5`, `test-instance-7`, etc.
+3. Parse the trailing integer, add `1`, and write it back with the rest of the string unchanged. Examples:
+   - `cluster25` → `cluster26`
+   - `lb5` → `lb6`
+   - `test-instance-7` → `test-instance-8`
+   - `cluster99` → `cluster100` (digits can grow)
+4. If the name has no trailing integer (e.g. just `cluster`), append `2` — treat the bare name as implicit `1`. Confirm with the user if unsure.
+5. Commit with a message like `Bump dev cluster name to cluster26`.
+
+### Verify
+
+`atmos terraform plan <component> -s <stack>` shows `random_id.id` being replaced (the `name` keeper changed), which cascades to the downstream `cluster_id`/`api_id`/etc. outputs.
+
+---
+
+## 3. Just "bump it"
+
+**Goal:** user says a bare "bump it" or "bump the PR" with no version or name in sight. They want CI / Atmos Pro to re-run on the existing branch without changing content.
+
+### Steps
+
+```bash
+git commit --allow-empty -m "Bump"
+git push
+```
+
+That's it. No file changes. Don't invent a code change just because there's nothing to change.
+
+---
+
+## 4. Wiring a component with the demo pattern
 
 **Goal:** a mock component currently has no `<component>_version` variable, or the variable exists but isn't tied to any resource, so bumps don't show plan changes.
 
@@ -104,6 +145,8 @@ Always use `<component>_version`. Do NOT use bare `version` — Terraform reserv
 
 Before handing back to the user:
 
-- Did the plan show real replacements (not just output-only diffs)?
+- Did the plan show real replacements (not just output-only diffs)? (Doesn't apply for an empty-commit "bump it".)
 - If you added the pattern to a component, did you update the catalog to include `<component>_version` as an explicit default?
 - Did you quote the version value in YAML?
+- For a name bump, did you only change the trailing integer and leave the rest of the string intact?
+- For a version bump without explicit instructions, did you do a minor bump?
