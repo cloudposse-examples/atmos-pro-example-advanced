@@ -56,10 +56,23 @@ variable "vpc_id" {
   default     = ""
 }
 
+variable "database_version" {
+  description = "Version of the database"
+  type        = string
+  default     = "1.0.0"
+}
+
 resource "random_id" "id" {
   byte_length = 8
   keepers = {
-    name = var.name
+    name             = var.name
+    database_version = var.database_version
+  }
+}
+
+resource "null_resource" "database_version" {
+  triggers = {
+    database_version = var.database_version
   }
 }
 
@@ -73,4 +86,8 @@ output "database_id" {
 
 output "vpc_id" {
   value = var.vpc_id
+}
+
+output "database_version" {
+  value = var.database_version
 }
