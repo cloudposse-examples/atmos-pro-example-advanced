@@ -62,10 +62,23 @@ variable "frontend_id" {
   default     = ""
 }
 
+variable "cdn_version" {
+  description = "Version of the CDN"
+  type        = string
+  default     = "1.0.0"
+}
+
 resource "random_id" "id" {
   byte_length = 8
   keepers = {
-    name = var.name
+    name        = var.name
+    cdn_version = var.cdn_version
+  }
+}
+
+resource "null_resource" "cdn_version" {
+  triggers = {
+    cdn_version = var.cdn_version
   }
 }
 
@@ -83,4 +96,8 @@ output "storage_id" {
 
 output "frontend_id" {
   value = var.frontend_id
+}
+
+output "cdn_version" {
+  value = var.cdn_version
 }

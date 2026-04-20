@@ -8,3 +8,4 @@ components:
       vars:
         storage_id: !terraform.state object-storage ".storage_id // ""mock-storage-id"""
         frontend_id: !terraform.state frontend ".frontend_id // ""mock-frontend-id"""
+        cdn_version: "1.0.0"
