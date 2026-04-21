@@ -28,8 +28,8 @@ on:
 # This applied to across workflows to both plan and apply
 concurrency:
   group: "${{ inputs.stack }}-${{ inputs.component }}"
-  # Cancel stale plans so the most recent commit's plan always runs
-  cancel-in-progress: true
+  # Queue (don't cancel) to avoid Terraform state lock conflicts
+  cancel-in-progress: false
 
 permissions:
   id-token: write # This is required for requesting the JWT (OIDC) token
