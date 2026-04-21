@@ -8,3 +8,4 @@ components:
       vars:
         database_id: !terraform.state database ".database_id // ""mock-database-id"""
         cluster_id: !terraform.state cluster ".cluster_id // ""mock-cluster-id"""
+        api_version: "1.0.0"

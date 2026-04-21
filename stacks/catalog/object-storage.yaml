@@ -3,3 +3,4 @@ components:
     object-storage:
       vars:
         name: testing 27
+        storage_version: "1.0.0"

@@ -75,10 +75,23 @@ variable "cluster_id" {
   default     = ""
 }
 
+variable "api_version" {
+  description = "Version of the API"
+  type        = string
+  default     = "1.0.0"
+}
+
 resource "random_id" "id" {
   byte_length = 8
   keepers = {
-    name = var.name
+    name        = var.name
+    api_version = var.api_version
+  }
+}
+
+resource "null_resource" "api_version" {
+  triggers = {
+    api_version = var.api_version
   }
 }
 
@@ -96,4 +109,8 @@ output "database_id" {
 
 output "cluster_id" {
   value = var.cluster_id
+}
+
+output "api_version" {
+  value = var.api_version
 }
