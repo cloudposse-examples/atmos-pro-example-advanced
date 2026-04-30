@@ -6,3 +6,4 @@ components:
           - component: vpc
       vars:
         vpc_id: !terraform.state vpc ".vpc_id // ""mock-vpc-id"""
+        lb_version: "1.0.0"

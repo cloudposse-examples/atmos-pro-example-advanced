@@ -5,7 +5,7 @@ terraform:
   dependencies:
     tools:
       # Use a specific terraform version from toolchain
-      opentofu: "1.11.0"
+      opentofu: "1.11.5"
   vars:
     descriptor_formats:
       account_name:
