@@ -14,3 +14,10 @@ import:
   - catalog/frontend
   - catalog/cdn
   - catalog/monitoring
+
+components:
+  terraform:
+    cluster:
+      vars:
+        name: cluster-prod1
+        cluster_version: "1.1.0"
