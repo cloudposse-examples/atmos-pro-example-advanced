@@ -6,3 +6,4 @@ components:
           - component: cluster
       vars:
         cluster_id: !terraform.state cluster ".cluster_id // ""mock-cluster-id"""
+        monitoring_version: "1.0.0"

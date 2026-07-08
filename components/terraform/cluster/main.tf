@@ -71,7 +71,14 @@ variable "cluster_version" {
 resource "random_id" "id" {
   byte_length = 8
   keepers = {
-    name = var.name
+    name            = var.name
+    cluster_version = var.cluster_version
+  }
+}
+
+resource "null_resource" "cluster_version" {
+  triggers = {
+    cluster_version = var.cluster_version
   }
 }
 

@@ -8,3 +8,4 @@ components:
       vars:
         api_id: !terraform.state api ".api_id // ""mock-api-id"""
         cache_id: !terraform.state cache ".cache_id // ""mock-cache-id"""
+        frontend_version: "1.0.0"

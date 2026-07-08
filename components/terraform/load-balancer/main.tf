@@ -56,10 +56,23 @@ variable "vpc_id" {
   default     = ""
 }
 
+variable "lb_version" {
+  description = "Version of the load balancer"
+  type        = string
+  default     = "1.0.0"
+}
+
 resource "random_id" "id" {
   byte_length = 8
   keepers = {
-    name = var.name
+    name       = var.name
+    lb_version = var.lb_version
+  }
+}
+
+resource "null_resource" "lb_version" {
+  triggers = {
+    lb_version = var.lb_version
   }
 }
 
@@ -73,4 +86,8 @@ output "lb_id" {
 
 output "vpc_id" {
   value = var.vpc_id
+}
+
+output "lb_version" {
+  value = var.lb_version
 }

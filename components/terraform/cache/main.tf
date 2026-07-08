@@ -50,10 +50,23 @@ variable "label_order" {
     EOT
 }
 
+variable "cache_version" {
+  description = "Version of the cache"
+  type        = string
+  default     = "1.0.0"
+}
+
 resource "random_id" "id" {
   byte_length = 8
   keepers = {
-    name = var.name
+    name          = var.name
+    cache_version = var.cache_version
+  }
+}
+
+resource "null_resource" "cache_version" {
+  triggers = {
+    cache_version = var.cache_version
   }
 }
 
@@ -63,4 +76,8 @@ locals {
 
 output "cache_id" {
   value = local.mock_cache_id
+}
+
+output "cache_version" {
+  value = var.cache_version
 }
