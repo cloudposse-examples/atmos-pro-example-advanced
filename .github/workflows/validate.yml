@@ -10,11 +10,6 @@ on:
     branches:
       - main
 
-# Concurrency ensures only the latest push for this PR will run at a time
-concurrency:
-  group: '${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.ref }}'
-  cancel-in-progress: true
-
 jobs:
   codeowners:
     name: "codeowners"
