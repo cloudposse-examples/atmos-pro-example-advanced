@@ -62,10 +62,23 @@ variable "cache_id" {
   default     = ""
 }
 
+variable "frontend_version" {
+  description = "Version of the frontend"
+  type        = string
+  default     = "1.0.0"
+}
+
 resource "random_id" "id" {
   byte_length = 8
   keepers = {
-    name = var.name
+    name             = var.name
+    frontend_version = var.frontend_version
+  }
+}
+
+resource "null_resource" "frontend_version" {
+  triggers = {
+    frontend_version = var.frontend_version
   }
 }
 
@@ -83,4 +96,8 @@ output "api_id" {
 
 output "cache_id" {
   value = var.cache_id
+}
+
+output "frontend_version" {
+  value = var.frontend_version
 }

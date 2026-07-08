@@ -40,10 +40,23 @@ variable "descriptor_formats" {
   description = "Descriptor formats"
 }
 
+variable "storage_version" {
+  description = "Version of the object storage"
+  type        = string
+  default     = "1.0.0"
+}
+
 resource "random_id" "id" {
   byte_length = 8
   keepers = {
-    name = var.name
+    name            = var.name
+    storage_version = var.storage_version
+  }
+}
+
+resource "null_resource" "storage_version" {
+  triggers = {
+    storage_version = var.storage_version
   }
 }
 
@@ -53,4 +66,8 @@ locals {
 
 output "storage_id" {
   value = local.mock_storage_id
+}
+
+output "storage_version" {
+  value = var.storage_version
 }

@@ -1,4 +1,5 @@
 components:
   terraform:
     vpc:
-      vars: {}
+      vars:
+        vpc_version: "1.0.0"
