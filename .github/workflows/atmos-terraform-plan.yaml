@@ -24,13 +24,6 @@ on:
         required: false
         default: "false"
 
-# Avoid running the same stack in parallel mode (from different workflows)
-# This applied to across workflows to both plan and apply
-concurrency:
-  group: "${{ inputs.stack }}-${{ inputs.component }}"
-  # Queue (don't cancel) to avoid Terraform state lock conflicts
-  cancel-in-progress: false
-
 permissions:
   id-token: write # This is required for requesting the JWT (OIDC) token
   contents: read # This is required for actions/checkout
