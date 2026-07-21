@@ -24,7 +24,8 @@ terraform:
   backend:
     s3:
       bucket: atmos-pro-ex2-tfstate
-      dynamodb_table: atmos-pro-ex2-tfstate
+      # dynamodb_table: atmos-pro-ex2-tfstate
+      use_lockfile: true
       role_arn: null
       encrypt: true
       key: terraform.tfstate
