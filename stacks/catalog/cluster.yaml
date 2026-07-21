@@ -8,3 +8,4 @@ components:
       vars:
         vpc_id: !terraform.state vpc ".vpc_id // ""mock-vpc-id"""
         lb_id: !terraform.state load-balancer ".lb_id // ""mock-lb-id"""
+        cluster_version: "1.0.0"

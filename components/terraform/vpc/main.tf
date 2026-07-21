@@ -40,10 +40,23 @@ variable "descriptor_formats" {
   description = "Descriptor formats"
 }
 
+variable "vpc_version" {
+  description = "Version of the VPC"
+  type        = string
+  default     = "1.0.0"
+}
+
 resource "random_id" "id" {
   byte_length = 8
   keepers = {
-    name = var.name
+    name        = var.name
+    vpc_version = var.vpc_version
+  }
+}
+
+resource "null_resource" "vpc_version" {
+  triggers = {
+    vpc_version = var.vpc_version
   }
 }
 
@@ -53,4 +66,8 @@ locals {
 
 output "vpc_id" {
   value = local.mock_vpc_id
+}
+
+output "vpc_version" {
+  value = var.vpc_version
 }

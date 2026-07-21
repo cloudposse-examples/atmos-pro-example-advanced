@@ -74,10 +74,23 @@ variable "frontend_id" {
   default     = ""
 }
 
+variable "monitoring_version" {
+  description = "Version of the monitoring stack"
+  type        = string
+  default     = "1.0.0"
+}
+
 resource "random_id" "id" {
   byte_length = 8
   keepers = {
-    name = var.name
+    name               = var.name
+    monitoring_version = var.monitoring_version
+  }
+}
+
+resource "null_resource" "monitoring_version" {
+  triggers = {
+    monitoring_version = var.monitoring_version
   }
 }
 
@@ -103,4 +116,8 @@ output "cluster_id" {
 
 output "frontend_id" {
   value = var.frontend_id
+}
+
+output "monitoring_version" {
+  value = var.monitoring_version
 }

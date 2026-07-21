@@ -23,12 +23,6 @@ on:
         required: true
         type: string
 
-# Avoid running the same stack in parallel mode (from different workflows)
-# This applied to across workflows to both plan and apply
-concurrency:
-  group: "${{ inputs.stack }}-${{ inputs.component }}"
-  cancel-in-progress: false
-
 permissions:
   id-token: write # This is required for requesting the JWT
   contents: read  # This is required for actions/checkout
