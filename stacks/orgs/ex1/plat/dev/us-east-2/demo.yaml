@@ -18,6 +18,8 @@ import:
 components:
   terraform:
     load-balancer:
+      settings:
+        gh_runner: macos-latest
       vars:
         name: lb6
 
