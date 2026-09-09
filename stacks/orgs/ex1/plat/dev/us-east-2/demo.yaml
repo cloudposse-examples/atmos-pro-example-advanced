@@ -21,7 +21,7 @@ components:
       settings:
         gh_runner: ubuntu-latest
       vars:
-        name: lb8
+        name: lb10
 
     cluster:
       vars:
