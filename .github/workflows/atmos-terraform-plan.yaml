@@ -1,5 +1,5 @@
 name: 👽 Atmos Pro Terraform Plan
-run-name: plan ${{ inputs.runner }} - ${{ inputs.component }}/${{ inputs.stack }}/${{ inputs.atmos_pro_run_id}}
+run-name: plan ${{ inputs.component }}/${{ inputs.stack }}/${{ inputs.atmos_pro_run_id}}
 
 on:
   workflow_dispatch:
