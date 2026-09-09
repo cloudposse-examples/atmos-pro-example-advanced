@@ -2,10 +2,14 @@ vars:
   namespace: ex1
 
 terraform:
+  settings:
+    gh_runner: ubuntu-latest
   dependencies:
     tools:
       # Use a specific terraform version from toolchain
       opentofu: "1.11.5"
+
+      
   vars:
     descriptor_formats:
       account_name:

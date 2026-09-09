@@ -3,6 +3,8 @@ plan-wf-config: &plan-wf-config
     inputs:
       component: "{{ .atmos_component }}"
       stack: "{{ .atmos_stack }}"
+      # Runner settings
+      runner: "{{ .settings.gh_runner }}"
 
 drift-detection-wf-config: &drift-detection-wf-config
   atmos-terraform-plan.yaml:

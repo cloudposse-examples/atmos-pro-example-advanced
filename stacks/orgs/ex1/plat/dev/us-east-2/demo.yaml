@@ -19,9 +19,9 @@ components:
   terraform:
     load-balancer:
       settings:
-        gh_runner: macos-latest
+        gh_runner: ubuntu-latest
       vars:
-        name: lb6
+        name: lb8
 
     cluster:
       vars:
