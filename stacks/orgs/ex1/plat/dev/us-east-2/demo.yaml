@@ -19,7 +19,7 @@ components:
   terraform:
     load-balancer:
       settings:
-        gh_runner: ubuntu-slim
+        gh_runner: ubuntu-latest
       vars:
         name: lb8
 
