@@ -21,7 +21,7 @@ components:
       settings:
         gh_runner: macos-latest
       vars:
-        name: lb6
+        name: lb8
 
     cluster:
       vars:
