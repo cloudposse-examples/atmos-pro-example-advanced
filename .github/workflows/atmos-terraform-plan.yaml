@@ -18,6 +18,11 @@ on:
         description: "Stack"
         required: true
         type: string
+      runner:
+        description: "Runner"
+        required: false
+        type: string
+        default: "ubuntu-latest"
       upload:
         description: "Upload plan status to Atmos Pro"
         type: string # All args for Atmos Pro are strings
@@ -35,7 +40,7 @@ jobs:
     name: ${{ inputs.component }}-${{ inputs.stack }}
 
     runs-on:
-      - "ubuntu-latest"
+      - ${{ inputs.runner }}
 
     container:
       image: ghcr.io/cloudposse/atmos:${{ vars.ATMOS_VERSION }}
