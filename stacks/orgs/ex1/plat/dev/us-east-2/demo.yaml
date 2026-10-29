@@ -21,7 +21,7 @@ components:
       settings:
         gh_runner: ubuntu-latest
       vars:
-        name: lb10
+        name: lb12
 
     cluster:
       vars:
@@ -42,4 +42,4 @@ components:
                   inputs:
                     upload: "true"
       vars:
-        name: test-instance-18
+        name: test-instance-12
