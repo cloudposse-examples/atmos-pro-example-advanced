@@ -20,4 +20,4 @@ components:
     cluster:
       vars:
         name: cluster-prod1
-        cluster_version: "1.8.0"
+        cluster_version: "1.9.0"
